@@ -1,0 +1,36 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+     {% include "snippets/meta.html" %}
+    <title>{{ Title }}</title>
+    {% include "snippets/styles.html" %}
+<!--
+    
+TemplateMo 556 Catalog-Z
+
+https://templatemo.com/tm-556-catalog-z
+
+-->
+</head>
+<body>
+    <!-- Page Loader -->
+    <div id="loader-wrapper">
+        <div id="loader"></div>
+
+        <div class="loader-section section-left"></div>
+        <div class="loader-section section-right"></div>
+
+    </div>
+    {% include "snippets/navbar.html" %}
+
+    
+    {% block content %}
+
+    {% endblock content %}
+     <!-- container-fluid, tm-container-content -->
+
+    
+    {% include "snippets/scripts.html" %}
+</body>
+</html>

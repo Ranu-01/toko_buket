@@ -1,0 +1,49 @@
+{% load static %}
+<div class="vertical-menu">
+
+    <div data-simplebar class="h-100">
+
+        <!--- Sidemenu -->
+        <div id="sidebar-menu">
+            <!-- Left Menu Start -->
+            <ul class="metismenu list-unstyled" id="side-menu">
+                <li class="menu-title" key="t-menu">Menu</li>
+                <li>
+                    <a href="{% url 'index' %}">
+                        <i class="bx bx-home-circle"></i>
+                        <span>Dashboards</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'create' %}">
+                        <i class="bx bx-box"></i>
+                        <span>Tambah kategori</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'create' %}">
+                        <i class="bx bx-layout"></i>
+                        <span>Tambah Product</span>
+                    </a>
+                </li>
+                
+                <li class="menu-title" key="t-apps">Apps</li>
+                <li>
+                    <a href="{% url 'detail' %}">
+                        <i class="bx bx-book"></i>
+                        <span>Detail Product</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'kategori' %}">
+                        <i class="bx bx-task"></i>
+                        <span>detail kategori</span>
+                    </a>
+                </li>
+                
+                
+            </ul>
+        </div>
+        <!-- Sidebar -->
+    </div>
+</div>

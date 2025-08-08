@@ -1,0 +1,64 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+
+    
+<!-- Mirrored from themesbrand.com/skote/layouts/dashboard-saas.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 23 Mar 2023 07:00:55 GMT -->
+    <head>
+
+        {% include "admin/snippets/meta.html" %}
+        {% include "admin/snippets/styles.html" %}
+        <title>{{ title }}</title>
+
+    </head>
+
+    <body data-sidebar="dark" data-layout-mode="light">
+
+    <!-- <body data-layout="horizontal" data-topbar="dark"> -->
+
+        <!-- Begin page -->
+        <div id="layout-wrapper">
+
+            
+           {% include "admin/snippets/navbar.html" %}
+
+            <!-- ========== Left Sidebar Start ========== -->
+            {% include "admin/snippets/sidebar.html" %}
+            <!-- Left Sidebar End -->
+
+            
+
+            <!-- ============================================================== -->
+            <!-- Start right Content here -->
+            <!-- ============================================================== -->
+            {% block content %}
+            <div class="main-content">
+
+                <div class="page-content">
+                    <div class="container-fluid">
+
+                        <!-- start page title -->
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+                                    <h4 class="mb-sm-0 font-size-18">{{ title }}</h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div> <!-- container-fluid -->
+                </div>
+                <!-- End Page-content -->
+                 {% include "admin/snippets/footer.html" %}
+            </div>
+
+            {% endblock content %}
+            <!-- end main content-->
+
+        </div>
+        <!-- JAVASCRIPT -->
+        {% include "admin/snippets/script.html" %}
+
+    </body>
+
+<!-- Mirrored from themesbrand.com/skote/layouts/dashboard-saas.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 23 Mar 2023 07:00:55 GMT -->
+</html>
