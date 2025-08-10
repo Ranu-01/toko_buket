@@ -14,15 +14,7 @@
                         <div class="row">
                             <div class="col-12">
                                 <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                                    <h4 class="mb-sm-0 font-size-18">Users List</h4>
-
-                                    <div class="page-title-right">
-                                        <ol class="breadcrumb m-0">
-                                            <li class="breadcrumb-item"><a href="javascript: void(0);">Contacts</a></li>
-                                            <li class="breadcrumb-item active">Users List</li>
-                                        </ol>
-                                    </div>
-
+                                    <h4 class="mb-sm-0 font-size-18">Kategori List</h4>
                                 </div>
                             </div>
                         </div>
@@ -36,32 +28,31 @@
                                             <table class="table align-middle table-nowrap table-hover">
                                                 <thead class="table-light">
                                                     <tr>
-                                                        <th scope="col" style="width: 70px;">#</th>
-                                                        <th scope="col">Name</th>
+                                                        <th scope="col" style="width: 70px;">No</th>
+                                                        <th scope="col">Nama Kategri</th>
                                                         <th scope="col">Action</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
+                                                    {% for kategori in semua_kategori %}
                                                     <tr>
                                                         <td>
-                                                            <div class="avatar-xs">
-                                                                <span class="avatar-title rounded-circle">
-                                                                    D
-                                                                </span>
-                                                            </div>
+                                                            {{ forloop.counter }}
                                                         </td>
-                                                        <td>INI nama barang</td>
+                                                        <td>{{ kategori.nama }}</td>
                                                         <td>
                                                             <ul class="list-inline font-size-20 contact-links mb-0">
                                                                 <li class="list-inline-item px-2">
-                                                                    <a href="javascript: void(0);" title="Message"><i class="bx bx-message-square-dots"></i></a>
+                                                                    <a href="{% url 'update_kategori' pk=kategori.id %}" title="Edit"><i class="bx bx-pencil"></i></a>
                                                                 </li>
                                                                 <li class="list-inline-item px-2">
-                                                                    <a href="javascript: void(0);" title="Profile"><i class="bx bx-user-circle"></i></a>
+                                                                    <a onclick="return confirm('Yakin ingin menghapus data ini ? ( data barang jika ikut terhapus jika ini di hapus )')" href="{% url 'delete_kategori' pk=kategori.id %}" title="Hapus">
+                                                                    <i class="bx bx-trash-alt"></i></a>
                                                                 </li>
                                                             </ul>
                                                         </td>
                                                     </tr>
+                                                    {% endfor %}
                                                 </tbody>
                                             </table>
                                         </div>

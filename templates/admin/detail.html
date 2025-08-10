@@ -33,13 +33,15 @@
                                 <div class="card">
                                     <div class="card-body">
                                         <div class="row">
+                                            {% for produk in produk_list %}
                                             <div class="col-xl-6">
                                                 <div class="product-detai-imgs">
                                                     <div class="row">
                                                         <div class="col-md-2 col-sm-3 col-4">
+
                                                             <div class="nav flex-column nav-pills " id="v-pills-tab" role="tablist" aria-orientation="vertical">
                                                                 <a class="nav-link active" id="product-1-tab" data-bs-toggle="pill" href="#product-1" role="tab" aria-controls="product-1" aria-selected="true">
-                                                                    <img src="static/product/admin/images/product/img-7.png" alt="" class="img-fluid mx-auto d-block rounded">
+                                                                    <img src="{{ produk.gambar }}" alt="" class="img-fluid mx-auto d-block rounded">
                                                                 </a>
                                                                 <a class="nav-link" id="product-2-tab" data-bs-toggle="pill" href="#product-2" role="tab" aria-controls="product-2" aria-selected="false">
                                                                     <img src="static/product/admin/images/product/img-8.png" alt="" class="img-fluid mx-auto d-block rounded">
@@ -82,44 +84,23 @@
     
                                             <div class="col-xl-6">
                                                 <div class="mt-4 mt-xl-3">
-                                                    <a href="javascript: void(0);" class="text-primary">Headphone</a>
-                                                    <h4 class="mt-1 mb-3">Wireless Headphone (Black)</h4>
-    
-                                                    <p class="text-muted float-start me-3">
-                                                        <span class="bx bxs-star text-warning"></span>
-                                                        <span class="bx bxs-star text-warning"></span>
-                                                        <span class="bx bxs-star text-warning"></span>
-                                                        <span class="bx bxs-star text-warning"></span>
-                                                        <span class="bx bxs-star"></span>
-                                                    </p>
-                                                    <p class="text-muted mb-4">( 152 Customers Review )</p>
+                                                    <a href="javascript: void(0);" class="text-primary">{{ produk.kategori }}</a>
+                                                    <h4 class="mt-1 mb-3">{{ produk.nama }}</h4>
     
                                                     <h6 class="text-success text-uppercase">20 % Off</h6>
-                                                    <h5 class="mb-4">Price : <span class="text-muted me-2"><del>$240 USD</del></span> <b>$225 USD</b></h5>
-                                                    <p class="text-muted mb-4">To achieve this, it would be necessary to have uniform grammar pronunciation and more common words If several languages coalesce</p>
-                                                    <div class="row mb-3">
-                                                        <div class="col-md-6">
-                                                            <div>
-                                                                <p class="text-muted"><i class="bx bx-unlink font-size-16 align-middle text-primary me-1"></i> Wireless</p>
-                                                                <p class="text-muted"><i class="bx bx-shape-triangle font-size-16 align-middle text-primary me-1"></i> Wireless Range : 10m</p>
-                                                                <p class="text-muted"><i class="bx bx-battery font-size-16 align-middle text-primary me-1"></i> Battery life : 6hrs</p>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-6">
-                                                            <div>
-                                                                <p class="text-muted"><i class="bx bx-user-voice font-size-16 align-middle text-primary me-1"></i> Bass</p>
-                                                                <p class="text-muted"><i class="bx bx-cog font-size-16 align-middle text-primary me-1"></i> Warranty : 1 Year</p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
+                                                    <h5 class="mb-4">Harga : <span class="text-muted me-2"><del>Rp. {{ produk.harga_normal }}</del></span> <b>Rp. {{ produk.harga_promo }}</b></h5>
+                                                    <p class="text-muted mb-4">{{ produk.value_selling }}</p>
     
                                                     <div class="product-color">
                                                         <h5 class="font-size-15">Color :</h5>
                                                         <a href="javascript: void(0);" class="active">
                                                             <div class="product-color-item border rounded">
-                                                                <img src="static/product/admin/images/product/img-7.png" alt="" class="avatar-md">
+                                                                {% if produk.gambar %}
+                                                                <img src="{{ produk.gambar_list.first.gambar.url }}" alt="{{ produk.nama }}" class="avatar-md">
+                                                                {% else %}
+                                                                <img src="/static/img/no-image.png" alt="tidak ada gambar" class="avatar-md">
+                                                                {% endif %}
                                                             </div>
-                                                            <p>Black</p>
                                                         </a>
                                                         <a href="javascript: void(0);">
                                                             <div class="product-color-item border rounded">
@@ -136,10 +117,13 @@
                                                     </div>
                                                 </div>
                                             </div>
+                                            {% endfor %}
+
                                         </div>
                                         <!-- end row -->
     
                                         <div class="mt-5">
+                                            {% for produk in produk_list %}
                                             <h5 class="mb-3">Specifications :</h5>
     
                                             <div class="table-responsive">
@@ -147,27 +131,24 @@
                                                     <tbody>
                                                         <tr>
                                                             <th scope="row" style="width: 400px;">Category</th>
-                                                            <td>Headphone</td>
+                                                            <td>{{ produk.kategori }}</td>
                                                         </tr>
                                                         <tr>
-                                                            <th scope="row">Brand</th>
-                                                            <td>JBL</td>
+                                                            <th scope="row">Nama</th>
+                                                            <td>{{ produk.nama }}</td>
                                                         </tr>
                                                         <tr>
-                                                            <th scope="row">Color</th>
-                                                            <td>Black</td>
+                                                            <th scope="row">Deskripsi</th>
+                                                            <td>{{ produk.deskripsi }}</td>
                                                         </tr>
                                                         <tr>
-                                                            <th scope="row">Connectivity</th>
-                                                            <td>Bluetooth</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <th scope="row">Warranty Summary</th>
-                                                            <td>1 Year</td>
+                                                            <th scope="row">Value isi Buket</th>
+                                                            <td>{{ produk.value_isi_buket }}</td>
                                                         </tr>
                                                     </tbody>
                                                 </table>
                                             </div>
+                                            {% endfor %}
                                         </div>
                                         <!-- end Specifications -->
     

@@ -11,9 +11,9 @@ class Produk(models.Model):
     nama = models.CharField(max_length=255)
     harga_normal = models.DecimalField(max_digits=10, decimal_places=2)
     harga_promo = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
-    value_selling = models.CharField(max_length=255, help_text="Keunggulan/USP produk")
-    deskripsi = models.TextField()
-    value_isi_buket = models.TextField(help_text="Isi buket / item-item dalam produk")
+    value_selling = models.CharField(max_length=255, help_text="Keunggulan/USP produk",default="-")
+    deskripsi = models.TextField(default="tidak Ada deskripsi")
+    value_isi_buket = models.TextField(help_text="Isi buket / item-item dalam produk", default="-")
     kategori = models.ForeignKey(Kategori, on_delete=models.CASCADE, related_name='produks')
     slug = models.SlugField(unique=True, blank=True)
 

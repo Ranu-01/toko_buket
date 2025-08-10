@@ -38,7 +38,7 @@
                                         <form class="row gy-2 gx-3 align-items-center" method="post">
                                             {% csrf_token %}
                                             <div class="mb-3">
-                                                <input id="floatinginput" name="nama" type="text" class="form-control" placeholder="nama kategori">
+                                                <input id="floatinginput" name="nama" type="text" class="form-control" placeholder="{{ form.nama }}">
                                                 {% if form.nama.errors %}
                                                     <div class="text-danger">{{ form.nama.errors }}</div>
                                                 {% endif %}

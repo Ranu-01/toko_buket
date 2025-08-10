@@ -32,67 +32,52 @@
                             <div class="col-12">
                                 <div class="card">
                                     <div class="card-body">
-        
-                                        <h4 class="card-title">Basic Information</h4>
-                                        <p class="card-title-desc">Fill all information below</p>
-        
-                                        <form>
+                                        <h4 class="card-title">Tambah Product</h4>
+                                        <form method="post" enctype="multipart/form-data">
+                                            {% csrf_token %}
                                             <div class="row">
                                                 <div class="col-sm-6">
                                                     <div class="mb-3">
-                                                        <label for="productname">Product Name</label>
-                                                        <input id="productname" name="productname" type="text" class="form-control" placeholder="Product Name">
+                                                        <label for="productname">Nama Produk</label>
+                                                        <input id="productname" name="nama" type="text" class="form-control" placeholder="Product Name">
                                                     </div>
                                                     <div class="mb-3">
-                                                        <label for="manufacturername">Manufacturer Name</label>
-                                                        <input id="manufacturername" name="manufacturername" type="text" class="form-control" placeholder="Manufacturer Name">
+                                                        <label for="productname">Harga Normal</label>
+                                                        <input id="productname" name="harga_normal" step="0.01" type="number" class="form-control" placeholder="Product harga">
                                                     </div>
                                                     <div class="mb-3">
-                                                        <label for="manufacturerbrand">Manufacturer Brand</label>
-                                                        <input id="manufacturerbrand" name="manufacturerbrand" type="text" class="form-control" placeholder="Manufacturer Brand">
+                                                        <label for="productname">Harga Promo </label>
+                                                        <input id="productname" name="harga_promo" step="0.01" type="number" class="form-control" placeholder="Boleh Kosong">
                                                     </div>
                                                     <div class="mb-3">
-                                                        <label for="price">Price</label>
-                                                        <input id="price" name="price" type="text" class="form-control" placeholder="Price">
+                                                        <label for="productdesc">Value selling</label>
+                                                        <textarea class="form-control" name="value_selling" id="productdesc" rows="5" placeholder="Product vallue selling"></textarea>
                                                     </div>
                                                 </div>
         
                                                 <div class="col-sm-6">
                                                     <div class="mb-3">
                                                         <label class="control-label">Category</label>
-                                                        <select class="form-control select2">
+                                                        <select class="form-control select2" name="kategori">
                                                             <option>Select</option>
-                                                            <option value="FA">Fashion</option>
-                                                            <option value="EL">Electronic</option>
+                                                            {% for kat in kategori_list %}
+                                                            <option value="{{ kat.id }}">{{ kat.nama }}</option>
+                                                            {% endfor %}
                                                         </select>
                                                     </div>
                                                     <div class="mb-3">
-                                                        <label class="control-label">Features</label>
-        
-                                                        <select class="select2 form-control select2-multiple" multiple="multiple" data-placeholder="Choose ...">
-                                                            <option value="WI">Wireless</option>
-                                                            <option value="BE">Battery life</option>
-                                                            <option value="BA">Bass</option>
-                                                        </select>
-        
+                                                        <label for="productdesc">Product Deskripsi</label>
+                                                        <textarea class="form-control" name="deskripsi" id="productdesc" rows="5" placeholder="Product Description"></textarea>
                                                     </div>
                                                     <div class="mb-3">
-                                                        <label for="productdesc">Product Description</label>
-                                                        <textarea class="form-control" id="productdesc" rows="5" placeholder="Product Description"></textarea>
+                                                        <label for="productdesc">Value isi buket</label>
+                                                        <textarea class="form-control" name="value_isi_buket" id="productdesc" rows="5" placeholder="Product Description"></textarea>
                                                     </div>
                                                     <div class="card">
                                                          <div class="card-body">
-                                                            <h4 class="card-title mb-3">Product Images</h4>
+                                                            <h4 class="card-title mb-3">Tambah Gambar Produck</h4>
                                                             <div class="fallback">
-                                                                <input name="file" type="file" multiple />
-                                                            </div>
-            
-                                                            <div class="dz-message needsclick">
-                                                                <div class="mb-3">
-                                                                    <i class="display-4 text-muted bx bxs-cloud-upload"></i>
-                                                                 </div>
-                                                
-                                                                <h4>Drop files here or click to upload.</h4>
+                                                                <input name="gambar" type="file" multiple />
                                                             </div>
                                       
                                                         </div>
