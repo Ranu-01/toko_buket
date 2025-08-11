@@ -95,7 +95,7 @@
                                                         <h5 class="font-size-15">Color :</h5>
                                                         <a href="javascript: void(0);" class="active">
                                                             <div class="product-color-item border rounded">
-                                                                {% if produk.gambar %}
+                                                                {% if produk.gambar_list.first %}
                                                                 <img src="{{ produk.gambar_list.first.gambar.url }}" alt="{{ produk.nama }}" class="avatar-md">
                                                                 {% else %}
                                                                 <img src="/static/img/no-image.png" alt="tidak ada gambar" class="avatar-md">

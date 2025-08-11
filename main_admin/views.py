@@ -11,7 +11,7 @@ from django.views.generic import (
 from django.utils.text import slugify
 import uuid
 from django.forms import modelformset_factory
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
 from .models import Kategori,GambarProduk,Produk
 from .forms import KategoriForm,GambarProdukForm,ProdukForm,GambarProdukFormSet
 from django.db.models import Value, CharField
@@ -80,50 +80,63 @@ class KategoriUpdateView(UpdateView):
           return context
 
 
-class ProductCreateView(View):
+class ProductCreateView(CreateView):
+    model = Produk
+    form_class = ProdukForm
     template_name = 'admin/product/create.html'
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Tambah Detail Produk'
+        return context
 
-    def get(self, request):
-        kategori_list = Kategori.objects.all()  # untuk dropdown kategori di form
+    def get_success_url(self):
+        
+        return reverse('add_product_images', kwargs={'pk': self.object.pk})
+    
+
+
+class AddProductImagesView(View):
+    template_name = 'admin/product/add_gambar.html'
+
+    def get(self, request, pk):
+        # Ambil produk berdasarkan PK dari URL
+        produk = get_object_or_404(Produk, pk=pk)
+        
+        # Siapkan formset kosong untuk di-render di template
+        formset = GambarProdukFormSet(queryset=GambarProduk.objects.none())
+        
         return render(request, self.template_name, {
-            'kategori_list': kategori_list
+            'title': f'Tambah Gambar untuk {produk.nama}',
+            'produk': produk,
+            'formset': formset
         })
 
-    def post(self, request):
-        # Ambil data dari form HTML manual
-        nama = request.POST.get('nama')
-        harga_normal = request.POST.get('harga_normal')
-        harga_promo = request.POST.get('harga_promo') or None
-        value_selling = request.POST.get('value_selling')
-        deskripsi = request.POST.get('deskripsi')
-        value_isi_buket = request.POST.get('value_isi_buket')
-        kategori_id = request.POST.get('kategori')
+    def post(self, request, pk):
+        produk = get_object_or_404(Produk, pk=pk)
+        
+        # Proses data formset yang di-submit
+        formset = GambarProdukFormSet(request.POST, request.FILES)
 
-        kategori = Kategori.objects.get(id=kategori_id)
+        if formset.is_valid():
+            for form in formset:
+                if form.cleaned_data:
+                    # Ambil data dari form tapi jangan simpan dulu (commit=False)
+                    gambar = form.save(commit=False)
+                    # Kaitkan gambar dengan produk yang benar
+                    gambar.produk = produk
+                    gambar.save()
+            # Setelah semua gambar disimpan, redirect ke daftar produk
+            return redirect('product_list')
 
-        # Simpan produk
-        produk = Produk.objects.create(
-            nama=nama,
-            harga_normal=harga_normal,
-            harga_promo=harga_promo,
-            value_selling=value_selling,
-            deskripsi=deskripsi,
-            value_isi_buket=value_isi_buket,
-            kategori=kategori
-            # slug akan otomatis di-generate di method save()
-        )
-
-        # Ambil semua file gambar (name="gambar" di HTML harus multiple)
-        gambar_files = request.FILES.getlist('gambar')
-
-        for file in gambar_files:
-            GambarProduk.objects.create(
-                produk=produk,
-                gambar=file
-            )
-
-        return redirect('index')  # ganti dengan url tujuan setelah sukses
-
+        # Jika formset tidak valid, render kembali halaman dengan error
+        return render(request, self.template_name, {
+            'title': f'Tambah Gambar untuk {produk.nama}',
+            'produk': produk,
+            'formset': formset
+        })
+    
+    
 class ProductListView(ListView):
     model = Produk  # model yang mau ditampilkan
     template_name = 'admin/detail.html'  # template untuk menampilkan data

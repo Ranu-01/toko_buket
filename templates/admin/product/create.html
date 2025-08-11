@@ -33,66 +33,57 @@
                                 <div class="card">
                                     <div class="card-body">
                                         <h4 class="card-title">Tambah Product</h4>
-                                        <form method="post" enctype="multipart/form-data">
-                                            {% csrf_token %}
-                                            <div class="row">
-                                                <div class="col-sm-6">
-                                                    <div class="mb-3">
-                                                        <label for="productname">Nama Produk</label>
-                                                        <input id="productname" name="nama" type="text" class="form-control" placeholder="Product Name">
-                                                    </div>
-                                                    <div class="mb-3">
-                                                        <label for="productname">Harga Normal</label>
-                                                        <input id="productname" name="harga_normal" step="0.01" type="number" class="form-control" placeholder="Product harga">
-                                                    </div>
-                                                    <div class="mb-3">
-                                                        <label for="productname">Harga Promo </label>
-                                                        <input id="productname" name="harga_promo" step="0.01" type="number" class="form-control" placeholder="Boleh Kosong">
-                                                    </div>
-                                                    <div class="mb-3">
-                                                        <label for="productdesc">Value selling</label>
-                                                        <textarea class="form-control" name="value_selling" id="productdesc" rows="5" placeholder="Product vallue selling"></textarea>
-                                                    </div>
-                                                </div>
-        
-                                                <div class="col-sm-6">
-                                                    <div class="mb-3">
-                                                        <label class="control-label">Category</label>
-                                                        <select class="form-control select2" name="kategori">
-                                                            <option>Select</option>
-                                                            {% for kat in kategori_list %}
-                                                            <option value="{{ kat.id }}">{{ kat.nama }}</option>
-                                                            {% endfor %}
-                                                        </select>
-                                                    </div>
-                                                    <div class="mb-3">
-                                                        <label for="productdesc">Product Deskripsi</label>
-                                                        <textarea class="form-control" name="deskripsi" id="productdesc" rows="5" placeholder="Product Description"></textarea>
-                                                    </div>
-                                                    <div class="mb-3">
-                                                        <label for="productdesc">Value isi buket</label>
-                                                        <textarea class="form-control" name="value_isi_buket" id="productdesc" rows="5" placeholder="Product Description"></textarea>
-                                                    </div>
-                                                    <div class="card">
-                                                         <div class="card-body">
-                                                            <h4 class="card-title mb-3">Tambah Gambar Produck</h4>
-                                                            <div class="fallback">
-                                                                <input name="gambar" type="file" multiple />
-                                                            </div>
-                                      
+                                            <form method="post" enctype="multipart/form-data">
+                                                {% csrf_token %}
+                                                <div class="row">
+                                                    <div class="col-sm-6">
+                                                        <div class="mb-3">
+                                                            <label for="{{ form.nama.id_for_label }}">Nama Produk</label>
+                                                            {{ form.nama }}
+                                                            {% if form.nama.errors %}<div class="text-danger mt-1">{{ form.nama.errors|striptags }}</div>{% endif %}
                                                         </div>
-
+                                                        <div class="mb-3">
+                                                            <label for="{{ form.harga_normal.id_for_label }}">Harga Normal</label>
+                                                            {{ form.harga_normal }}
+                                                            {% if form.harga_normal.errors %}<div class="text-danger mt-1">{{ form.harga_normal.errors|striptags }}</div>{% endif %}
+                                                        </div>
+                                                        <div class="mb-3">
+                                                            <label for="{{ form.harga_promo.id_for_label }}">Harga Promo</label>
+                                                            {{ form.harga_promo }}
+                                                            {% if form.harga_promo.errors %}<div class="text-danger mt-1">{{ form.harga_promo.errors|striptags }}</div>{% endif %}
+                                                        </div>
+                                                        <div class="mb-3">
+                                                            <label for="{{ form.value_selling.id_for_label }}">Value Selling</label>
+                                                            {{ form.value_selling }}
+                                                            {% if form.value_selling.errors %}<div class="text-danger mt-1">{{ form.value_selling.errors|striptags }}</div>{% endif %}
+                                                        </div>
                                                     </div>
-                                                    
+
+                                                    <div class="col-sm-6">
+                                                        <div class="mb-3">
+                                                            <label for="{{ form.kategori.id_for_label }}" class="control-label">Kategori</label>
+                                                            {{ form.kategori }}
+                                                            {% if form.kategori.errors %}<div class="text-danger mt-1">{{ form.kategori.errors|striptags }}</div>{% endif %}
+                                                        </div>
+                                                        <div class="mb-3">
+                                                            <label for="{{ form.deskripsi.id_for_label }}">Deskripsi Produk</label>
+                                                            {{ form.deskripsi }}
+                                                            {% if form.deskripsi.errors %}<div class="text-danger mt-1">{{ form.deskripsi.errors|striptags }}</div>{% endif %}
+                                                        </div>
+                                                        <div class="mb-3">
+                                                            <label for="{{ form.value_isi_buket.id_for_label }}">Value Isi Buket</label>
+                                                            {{ form.value_isi_buket }}
+                                                            {% if form.value_isi_buket.errors %}<div class="text-danger mt-1">{{ form.value_isi_buket.errors|striptags }}</div>{% endif %}
+                                                        </div>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            
-        
-                                            <div class="d-flex flex-wrap gap-2">
-                                                <button type="submit" class="btn btn-primary waves-effect waves-light">Save Changes</button>
-                                                <button type="button" class="btn btn-secondary waves-effect waves-light">Cancel</button>
-                                            </div>
-                                        </form>
+                                                
+                                                <div class="d-flex flex-wrap gap-2 mt-3">
+                                                    {# Tombol submit ini akan mengarahkan ke halaman tambah gambar jika sukses #}
+                                                    <button type="submit" class="btn btn-primary waves-effect waves-light">Simpan dan Lanjut Tambah Gambar</button>
+                                                    <a href="{% url 'product_list' %}" class="btn btn-secondary waves-effect waves-light">Batal</a>
+                                                </div>
+                                            </form>
         
                                     </div>
                                 </div>
