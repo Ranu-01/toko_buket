@@ -1,0 +1,93 @@
+{% extends "admin/admin_base.html" %}
+
+{% block title %}
+{{ title }}
+{% endblock title %}
+
+{% block content %}
+<div class="main-content">
+
+                <div class="page-content">
+                    <div class="container-fluid">
+
+                        <!-- start page title -->
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+                                    <h4 class="mb-sm-0 font-size-18">Produk List</h4>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- end page title -->
+
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="table-responsive">
+                                            <table class="table align-middle table-nowrap table-hover">
+                                                <thead class="table-light">
+                                                    <tr>
+                                                        <th scope="col" style="width: 70px;">No</th>
+                                                        <th scope="col">Nama Kategri</th>
+                                                        <th scope="col">Action</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    {% for produk in produk_list %}
+                                                    <tr>
+                                                        <td>
+                                                            {{ forloop.counter }}
+                                                        </td>
+                                                        <td>{{ produk.nama }}</td>
+                                                        <td>
+                                                            <ul class="list-inline font-size-20 contact-links mb-0">
+                                                                <li class="list-inline-item px-2">
+                                                                    <a href="#" title="Edit"><i class="bx bx-pencil"></i></a>
+                                                                </li>
+                                                                <li class="list-inline-item px-2">
+                                                                    <a onclick="return confirm('Yakin ingin menghapus data ini ? ( data barang jika ikut terhapus jika ini di hapus )')" href="{% url 'delete_produk' pk=produk.id %}" title="Hapus">
+                                                                    <i class="bx bx-trash-alt"></i></a>
+                                                                </li>
+                                                            </ul>
+                                                        </td>
+                                                    </tr>
+                                                    {% endfor %}
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg-12">
+                                                <ul class="pagination pagination-rounded justify-content-center mt-4">
+                                                    <li class="page-item disabled">
+                                                        <a href="javascript: void(0);" class="page-link"><i class="mdi mdi-chevron-left"></i></a>
+                                                    </li>
+                                                    <li class="page-item">
+                                                        <a href="javascript: void(0);" class="page-link">1</a>
+                                                    </li>
+                                                    <li class="page-item active">
+                                                        <a href="javascript: void(0);" class="page-link">2</a>
+                                                    </li>
+                                                    <li class="page-item">
+                                                        <a href="javascript: void(0);" class="page-link">3</a>
+                                                    </li>
+                                                    <li class="page-item">
+                                                        <a href="javascript: void(0);" class="page-link">4</a>
+                                                    </li>
+                                                    <li class="page-item">
+                                                        <a href="javascript: void(0);" class="page-link">5</a>
+                                                    </li>
+                                                    <li class="page-item">
+                                                        <a href="javascript: void(0);" class="page-link"><i class="mdi mdi-chevron-right"></i></a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div> <!-- container-fluid -->
+                </div>
+            </div>
+{% endblock content %}

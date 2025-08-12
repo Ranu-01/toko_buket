@@ -25,7 +25,7 @@ class KategoriForm(forms.ModelForm):
 class GambarProdukForm(forms.ModelForm):
      class Meta :
           model = GambarProduk
-          fields = ['produk', 'gambar']
+          fields = [ 'gambar']
 
 # Formset untuk banyak gambar
 GambarProdukFormSet = modelformset_factory(

@@ -5,6 +5,7 @@ from django.views.generic import (
      CreateView,
      DeleteView,
      UpdateView,
+     DetailView,
      RedirectView,
      TemplateView
      )
@@ -14,7 +15,7 @@ from django.forms import modelformset_factory
 from django.urls import reverse_lazy, reverse
 from .models import Kategori,GambarProduk,Produk
 from .forms import KategoriForm,GambarProdukForm,ProdukForm,GambarProdukFormSet
-from django.db.models import Value, CharField
+from django.db.models import Value, CharField,Q
 
 
 class KategoriListView(ListView):
@@ -95,7 +96,6 @@ class ProductCreateView(CreateView):
         return reverse('add_product_images', kwargs={'pk': self.object.pk})
     
 
-
 class AddProductImagesView(View):
     template_name = 'admin/product/add_gambar.html'
 
@@ -127,7 +127,7 @@ class AddProductImagesView(View):
                     gambar.produk = produk
                     gambar.save()
             # Setelah semua gambar disimpan, redirect ke daftar produk
-            return redirect('product_list')
+            return redirect('list_produk')
 
         # Jika formset tidak valid, render kembali halaman dengan error
         return render(request, self.template_name, {
@@ -137,14 +137,74 @@ class AddProductImagesView(View):
         })
     
     
-class ProductListView(ListView):
+
+class HomeAllProdukView(ListView):
+     model = Produk
+     template_name = 'admin/index.html'
+     context_object_name= 'semua_produk'
+     ordering =['-id']
+     paginate_by = 10
+
+     def get_context_data(self, **kwargs):
+          context = super().get_context_data(**kwargs)
+          
+          context['title'] = 'daftar produk'
+          return context
+     
+
+class DetailProdukView(DetailView):
     model = Produk  # model yang mau ditampilkan
-    template_name = 'admin/detail.html'  # template untuk menampilkan data
-    context_object_name = 'produk_list'  # nama variabel di template
-    ordering = ['-id']  # urutkan dari terbaru
-    paginate_by = 10  # kalau mau pagination
+    template_name = 'admin/detail_produk.html'  # template untuk menampilkan data
+    context_object_name = 'produk'      
+    def get_context_data(self, **kwargs):
+     context = super().get_context_data(**kwargs)
+     context['title'] = 'Daftar Produk'
+     return context
+
+     
+class ProdukDeleteView(DeleteView):
+     model = Produk
+     success_url = reverse_lazy('list_produk')
+
+     def get(self,request,*args,**kwargs):
+          self.object = self.get_object()
+          self.object.delete()
+          return redirect(self.success_url)
+     
+class ProductListView(ListView):
+   
+    model = Produk
+    # Ganti 'product/product_list.html' dengan path template Anda yang sebenarnya.
+    template_name = 'admin/list_produk.html'
+    # Nama variabel yang akan digunakan di dalam template untuk menampung daftar produk.
+    context_object_name = 'produk_list'
+    # Jumlah produk yang ditampilkan per halaman.
+    paginate_by = 9
+
+    def get_queryset(self):
+        # Ambil queryset dasar (semua produk) dan urutkan dari yang terbaru.
+        queryset = super().get_queryset().order_by('-id')
+        
+        # Ambil keyword pencarian dari parameter URL (misal: /produk/?q=mawar).
+        search_query = self.request.GET.get('q', None)
+        
+        if search_query:
+            queryset = queryset.filter(
+                Q(nama__icontains=search_query) |
+                Q(deskripsi__icontains=search_query)
+            )
+            
+        return queryset
 
     def get_context_data(self, **kwargs):
+        # Panggil implementasi dasar terlebih dahulu untuk mendapatkan konteks.
         context = super().get_context_data(**kwargs)
+        
+        # Tambahkan judul halaman ke dalam konteks.
         context['title'] = 'Daftar Produk'
+        context['search_query'] = self.request.GET.get('q', '')
+        
         return context
+    
+
+

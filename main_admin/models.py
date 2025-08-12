@@ -11,9 +11,9 @@ class Produk(models.Model):
     nama = models.CharField(max_length=255)
     harga_normal = models.DecimalField(max_digits=10, decimal_places=2)
     harga_promo = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
-    value_selling = models.CharField(max_length=255, help_text="Keunggulan/USP produk",default="-")
-    deskripsi = models.TextField(default="tidak Ada deskripsi")
-    value_isi_buket = models.TextField(help_text="Isi buket / item-item dalam produk", default="-")
+    value_selling = models.CharField(max_length=255, help_text="Keunggulan/USP produk", blank=True, null=True)
+    deskripsi = models.TextField(blank=True, null=True)
+    value_isi_buket = models.TextField(help_text="Isi buket / item-item dalam produk", blank=True, null=True)
     kategori = models.ForeignKey(Kategori, on_delete=models.CASCADE, related_name='produks')
     slug = models.SlugField(unique=True, blank=True)
 
@@ -22,7 +22,13 @@ class Produk(models.Model):
 
     def save(self, *args, **kwargs):
         if not self.slug:
-            self.slug = slugify(self.nama)
+            slug_candidate = slugify(self.nama)
+            unique_slug = slug_candidate
+            counter = 1
+            while Produk.objects.filter(slug=unique_slug).exists():
+                unique_slug = f'{slug_candidate}-{counter}'
+                counter += 1
+            self.slug = unique_slug
         super().save(*args, **kwargs)
 
 class GambarProduk(models.Model):

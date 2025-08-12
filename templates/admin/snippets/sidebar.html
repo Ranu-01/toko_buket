@@ -9,7 +9,7 @@
             <ul class="metismenu list-unstyled" id="side-menu">
                 <li class="menu-title" key="t-menu">Menu</li>
                 <li>
-                    <a href="#">
+                    <a href="{% url 'home' %}">
                         <i class="bx bx-home-circle"></i>
                         <span>Dashboards</span>
                     </a>
@@ -29,15 +29,21 @@
                 
                 <li class="menu-title" key="t-apps">Apps</li>
                 <li>
-                    <a href="{% url 'product_list' %}">
+                    <a href="#">
                         <i class="bx bx-book"></i>
                         <span>Detail Product</span>
                     </a>
                 </li>
                 <li>
                     <a href="{% url 'kategori' %}">
-                        <i class="bx bx-task"></i>
-                        <span>detail kategori</span>
+                        <i class="bx bx-book"></i>
+                        <span>List kategori</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'list_produk' %}">
+                        <i class="bx bx-book"></i>
+                        <span>List Produk</span>
                     </a>
                 </li>
                 
