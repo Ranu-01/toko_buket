@@ -4,7 +4,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.urls import path
 from .views import (KategoriListView,KategoriCreateview,KategoriUpdateView,KategoriDeleteView,
-                    ProductCreateView,DetailProdukView,AddProductImagesView,ProdukDeleteView,ProductListView,
+                    ProductCreateView,DetailProdukView,AddProductImagesView,ProdukDeleteView,ProductListView,ProductUpdateView,
                     HomeAllProdukView)
 from . import views
 
@@ -19,6 +19,7 @@ urlpatterns = [
     path('delete_produk/<int:pk>/', ProdukDeleteView.as_view(), name='delete_produk'),
     path('produk/<int:pk>/tambah-gambar/', AddProductImagesView.as_view(), name='add_product_images'),
     path('produk/detail/<int:pk>/', DetailProdukView.as_view(), name='detail_produk'),
+    path('produk/edit/<int:pk>/', ProductUpdateView.as_view(), name='edit_produk'),
 
     path ('kategori/',KategoriListView.as_view(),name='kategori'),
     path ('kategori_create/',KategoriCreateview.as_view(),name='create_kategori'),

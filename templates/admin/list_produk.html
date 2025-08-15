@@ -43,7 +43,7 @@
                                                         <td>
                                                             <ul class="list-inline font-size-20 contact-links mb-0">
                                                                 <li class="list-inline-item px-2">
-                                                                    <a href="#" title="Edit"><i class="bx bx-pencil"></i></a>
+                                                                    <a href="{% url 'edit_produk' pk=produk.pk %}" title="Edit"><i class="bx bx-pencil"></i></a>
                                                                 </li>
                                                                 <li class="list-inline-item px-2">
                                                                     <a onclick="return confirm('Yakin ingin menghapus data ini ? ( data barang jika ikut terhapus jika ini di hapus )')" href="{% url 'delete_produk' pk=produk.id %}" title="Hapus">

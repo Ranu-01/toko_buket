@@ -152,15 +152,6 @@ class HomeAllProdukView(ListView):
           return context
      
 
-class DetailProdukView(DetailView):
-    model = Produk  # model yang mau ditampilkan
-    template_name = 'admin/detail_produk.html'  # template untuk menampilkan data
-    context_object_name = 'produk'      
-    def get_context_data(self, **kwargs):
-     context = super().get_context_data(**kwargs)
-     context['title'] = 'Daftar Produk'
-     return context
-
      
 class ProdukDeleteView(DeleteView):
      model = Produk
@@ -170,6 +161,24 @@ class ProdukDeleteView(DeleteView):
           self.object = self.get_object()
           self.object.delete()
           return redirect(self.success_url)
+     
+
+class DetailProdukView(DetailView):
+    """
+    View ini sekarang sudah benar untuk menampilkan detail SATU produk.
+    """
+    model = Produk
+    template_name = 'admin/detail_produk.html'
+    # Nama variabel di template adalah 'produk' (tunggal)
+    context_object_name = 'produk'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        # 'self.object' adalah produk yang sedang ditampilkan
+        context['title'] = self.object.nama
+        return context
+    
+    
      
 class ProductListView(ListView):
    
@@ -205,6 +214,19 @@ class ProductListView(ListView):
         context['search_query'] = self.request.GET.get('q', '')
         
         return context
+    
+
+class ProductUpdateView(UpdateView):
+    model = Produk
+    form_class = ProdukForm
+    template_name = 'admin/product/update_produk.html'
+    def get_context_data(self, **kwargs):
+        context= super().get_context_data(**kwargs)
+        context ['title'] = f'Edit Produk : {self.object.nama}'
+        return context
+    
+    def get_success_url(self):
+        return reverse('detail_produk',kwargs={'pk' : self.object.pk})
     
 
 

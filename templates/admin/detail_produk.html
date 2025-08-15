@@ -1,147 +1,94 @@
 {% extends "admin/admin_base.html" %}
+{% load static %}
+{% load humanize %}
 
 {% block title %}
-{{ title }}
+Detail: {{ produk.nama }}
 {% endblock title %}
 
 {% block content %}
- <div class="main-content">
-
-                <div class="page-content">
-                    <div class="container-fluid">
-
-                        <!-- start page title -->
-                        <div class="row">
-                            <div class="col-12">
-                                <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                                    <h4 class="mb-sm-0 font-size-18">Product Detail</h4>
-
-                                    <div class="page-title-right">
-                                        <ol class="breadcrumb m-0">
-                                            <li class="breadcrumb-item"><a href="javascript: void(0);">Ecommerce</a></li>
-                                            <li class="breadcrumb-item active">Product Detail</li>
-                                        </ol>
-                                    </div>
-
-                                </div>
-                            </div>
-                        </div>
-                        <!-- end page title -->
-
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <div class="card">
-                                    <div class="card-body">
-                                        <div class="row">
-                                            <div class="col-xl-6">
-                                                <div class="product-detai-imgs">
-                                                    <div class="row">
-                                                        <div class="col-md-7 offset-md-1 col-sm-9 col-8">
-                                                            <div class="tab-content" id="v-pills-tabContent">
-                                                                {% with gambar_utama=produk.gambar_list.first %}
-                                                                <div class="tab-pane fade" id="product-2" role="tabpanel" aria-labelledby="product-2-tab">
-                                                                    <div>
-                                                                        {% if gambar_utama %}
-                                                                        <img src="{{ gambar_utama.gambar.url }}" alt="{{ produk.nama }}" class="img-fluid mx-auto d-block">
-                                                                        {% else %}
-                                                                            <img src="'static/img/no-image.png' " alt="Gambar tidak tersedia" class="img-fluid rounded">
-                                                                        {% endif %}
-                                                                    </div>
-                                                                {% endwith %}
-                                                                </div>
-                                                                <div class="tab-pane fade" id="product-3" role="tabpanel" aria-labelledby="product-3-tab">
-                                                                    <div>
-                                                                        <img src="static/product/admin/images/product/img-7.png" alt="" class="img-fluid mx-auto d-block">
-                                                                    </div>
-                                                                </div>
-                                                                <div class="tab-pane fade" id="product-4" role="tabpanel" aria-labelledby="product-4-tab">
-                                                                    <div>
-                                                                        <img src="static/product/admin/images/product/img-8.png" alt="" class="img-fluid mx-auto d-block">
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-    
-                                            <div class="col-xl-6">
-                                                <div class="mt-4 mt-xl-3">
-                                                    <a href="javascript: void(0);" class="text-primary">{{ produk.kategori }}</a>
-                                                    <h4 class="mt-1 mb-3">{{ produk.nama }}</h4>
-    
-                                                    <h6 class="text-success text-uppercase">20 % Off</h6>
-                                                    <h5 class="mb-4">Harga : <span class="text-muted me-2"><del>Rp. {{ produk.harga_normal }}</del></span> <b>Rp. {{ produk.harga_promo }}</b></h5>
-                                                    <p class="text-muted mb-4">{{ produk.value_selling }}</p>
-    
-                                                    <div class="product-color">
-                                                        <h5 class="font-size-15">Color :</h5>
-                                                        <a href="javascript: void(0);" class="active">
-                                                            <div class="product-color-item border rounded">
-                                                                {% if produk.gambar_list.first %}
-                                                                <img src="{{ produk.gambar_list.first.gambar.url }}" alt="{{ produk.nama }}" class="avatar-md">
-                                                                {% else %}
-                                                                <img src="/static/img/no-image.png" alt="tidak ada gambar" class="avatar-md">
-                                                                {% endif %}
-                                                            </div>
-                                                        </a>
-                                                        <a href="javascript: void(0);">
-                                                            <div class="product-color-item border rounded">
-                                                                <img src="static/product/admin/images/product/img-7.png" alt="" class="avatar-md">
-                                                            </div>
-                                                            <p>Blue</p>
-                                                        </a>
-                                                        <a href="javascript: void(0);">
-                                                            <div class="product-color-item border rounded">
-                                                                <img src="static/product/admin/images/product/img-7.png" alt="" class="avatar-md">
-                                                            </div>
-                                                            <p>Gray</p>
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                        </div>
-                                        <!-- end row -->
-    
-                                        <div class="mt-5">
-                                            {% for produk in produk_list %}
-                                            <h5 class="mb-3">Specifications :</h5>
-    
-                                            <div class="table-responsive">
-                                                <table class="table mb-0 table-bordered">
-                                                    <tbody>
-                                                        <tr>
-                                                            <th scope="row" style="width: 400px;">Category</th>
-                                                            <td>{{ produk.kategori }}</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <th scope="row">Nama</th>
-                                                            <td>{{ produk.nama }}</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <th scope="row">Deskripsi</th>
-                                                            <td>{{ produk.deskripsi }}</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <th scope="row">Value isi Buket</th>
-                                                            <td>{{ produk.value_isi_buket }}</td>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                            {% endfor %}
-                                        </div>
-                                        <!-- end Specifications -->
-    
-                                    </div>
-                                </div>
-                                <!-- end card -->
-                            </div>
-                        </div>
-                        <!-- end row -->
-                        <!-- end row -->
-
-                    </div> <!-- container-fluid -->
+<div class="main-content">
+    <div class="page-content">
+        <div class="container-fluid">
+            <!-- Judul halaman -->
+            <div class="row">
+                <div class="col-12">
+                    <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+                        <h4 class="mb-sm-0 font-size-18">Detail Produk: {{ produk.nama }}</h4>
+                    </div>
                 </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row">
+                                <!-- KOLOM KIRI: GAMBAR PRODUK -->
+                                <div class="col-xl-6">
+                                    <!-- Gambar Utama -->
+                                    {% with gambar_utama=produk.gambar_list.first %}
+                                        <div class="mb-3">
+                                            {% if gambar_utama %}
+                                                <img src="{{ gambar_utama.gambar.url }}" alt="{{ produk.nama }}" class="img-fluid mx-auto d-block rounded">
+                                            {% else %}
+                                                <img src="{% static "product/admin/images/error-img.png" %}" alt="Gambar tidak tersedia" class="img-fluid rounded">
+                                            {% endif %}
+                                        </div>
+                                    {% endwith %}
+                                    
+                                    <!-- Galeri Thumbnail -->
+                                    <div class="d-flex flex-wrap gap-2">
+                                        {% for gambar_objek in produk.gambar_list.all %}
+                                        <div class="product-color-item border rounded" style="width: 90px; height: 90px;">
+                                            <img src="{{ gambar_objek.gambar.url }}" alt="Thumbnail {{ forloop.counter }}" class="img-fluid mx-auto d-block h-100 w-100" style="object-fit: cover;">
+                                        </div>
+                                        {% empty %}
+                                            <p class="text-muted">Tidak ada galeri gambar.</p>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+
+                                <!-- KOLOM KANAN: INFO PRODUK -->
+                                <div class="col-xl-6">
+                                    <div class="mt-4 mt-xl-3">
+                                        <p class="text-primary">{{ produk.kategori.nama }}</p>
+                                        <h4 class="mt-1 mb-3">{{ produk.nama }}</h4>
+                                        <h5 class="mb-4">Harga: 
+                                            {% if produk.harga_promo %}
+                                                <span class="text-muted me-2"><del>Rp{{ produk.harga_normal|floatformat:0|intcomma }}</del></span>
+                                                <b>Rp{{ produk.harga_promo|floatformat:0|intcomma }}</b>
+                                            {% else %}
+                                                <b>Rp{{ produk.harga_normal|floatformat:0|intcomma }}</b>
+                                            {% endif %}
+                                        </h5>
+                                        <p class="text-muted mb-4">{{ produk.value_selling|default:"-" }}</p>
+                                    </div>
+                                </div>
+                            </div>
+    
+                            <div class="mt-5">
+                                <h5 class="mb-3">Spesifikasi:</h5>
+                                <div class="table-responsive">
+                                    <table class="table mb-0 table-bordered">
+                                        <tbody>
+                                            <tr>
+                                                <th scope="row">Deskripsi</th>
+                                                <td>{{ produk.deskripsi|linebreaksbr|default:"Tidak ada deskripsi." }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row">Isi Buket</th>
+                                                <td>{{ produk.value_isi_buket|linebreaksbr|default:"-" }}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock content %}
