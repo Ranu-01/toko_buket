@@ -11,14 +11,16 @@ from django.views.generic import (
      )
 from django.utils.text import slugify
 import uuid
+from django.contrib.auth.views import LoginView, LogoutView
 from django.forms import modelformset_factory
 from django.urls import reverse_lazy, reverse
 from .models import Kategori,GambarProduk,Produk
-from .forms import KategoriForm,GambarProdukForm,ProdukForm,GambarProdukFormSet
+from .forms import KategoriForm,GambarProdukForm,ProdukForm,GambarProdukFormSet,RegistrasiAdminForm, LoginAdminForm
 from django.db.models import Value, CharField,Q
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 
-class KategoriListView(ListView):
+class KategoriListView(LoginRequiredMixin,ListView):
      model = Kategori
      template_name = 'admin/detail_kategori.html'
      context_object_name = 'semua_kategori'
@@ -41,7 +43,7 @@ class KategoriListView(ListView):
           context['product_list'] = daftar_kategori
           return context
      
-class KategoriCreateview(CreateView):
+class KategoriCreateview(LoginRequiredMixin,CreateView):
      template_name = 'admin/product/create_kategori.html'
      model = Kategori
      form_class = KategoriForm
@@ -60,7 +62,7 @@ class KategoriCreateview(CreateView):
                'title' : 'Tamabah Kategori Gagal'
           })
      
-class KategoriDeleteView(DeleteView):
+class KategoriDeleteView(LoginRequiredMixin,DeleteView):
      model = Kategori
      success_url = reverse_lazy('kategori')
 
@@ -69,7 +71,7 @@ class KategoriDeleteView(DeleteView):
           self.object.delete()
           return redirect(self.success_url)
      
-class KategoriUpdateView(UpdateView):
+class KategoriUpdateView(LoginRequiredMixin,UpdateView):
      model = Kategori
      form_class = KategoriForm
      template_name = 'admin/product/update_kategori.html'
@@ -81,7 +83,7 @@ class KategoriUpdateView(UpdateView):
           return context
 
 
-class ProductCreateView(CreateView):
+class ProductCreateView(LoginRequiredMixin,CreateView):
     model = Produk
     form_class = ProdukForm
     template_name = 'admin/product/create.html'
@@ -96,7 +98,7 @@ class ProductCreateView(CreateView):
         return reverse('add_product_images', kwargs={'pk': self.object.pk})
     
 
-class AddProductImagesView(View):
+class AddProductImagesView(LoginRequiredMixin,View):
     template_name = 'admin/product/add_gambar.html'
 
     def get(self, request, pk):
@@ -138,7 +140,7 @@ class AddProductImagesView(View):
     
     
 
-class HomeAllProdukView(ListView):
+class HomeAllProdukView(LoginRequiredMixin,ListView):
      model = Produk
      template_name = 'admin/index.html'
      context_object_name= 'semua_produk'
@@ -153,7 +155,7 @@ class HomeAllProdukView(ListView):
      
 
      
-class ProdukDeleteView(DeleteView):
+class ProdukDeleteView(LoginRequiredMixin,DeleteView):
      model = Produk
      success_url = reverse_lazy('list_produk')
 
@@ -163,7 +165,7 @@ class ProdukDeleteView(DeleteView):
           return redirect(self.success_url)
      
 
-class DetailProdukView(DetailView):
+class DetailProdukView(LoginRequiredMixin,DetailView):
     """
     View ini sekarang sudah benar untuk menampilkan detail SATU produk.
     """
@@ -180,7 +182,7 @@ class DetailProdukView(DetailView):
     
     
      
-class ProductListView(ListView):
+class ProductListView(LoginRequiredMixin,ListView):
    
     model = Produk
     # Ganti 'product/product_list.html' dengan path template Anda yang sebenarnya.
@@ -216,7 +218,7 @@ class ProductListView(ListView):
         return context
     
 
-class ProductUpdateView(UpdateView):
+class ProductUpdateView(LoginRequiredMixin,UpdateView):
     model = Produk
     form_class = ProdukForm
     template_name = 'admin/product/update_produk.html'
@@ -230,3 +232,41 @@ class ProductUpdateView(UpdateView):
     
 
 
+
+
+
+class RegistrasiView(CreateView):
+    """
+    View untuk menangani pembuatan admin baru.
+    """
+    form_class = RegistrasiAdminForm
+    template_name = 'admin/auth/register.html'
+    # Setelah registrasi berhasil, arahkan ke halaman login
+    success_url = reverse_lazy('login_admin')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Registrasi Admin Baru'
+        return context
+
+class LoginAdminView(LoginView):
+    """
+    View untuk menangani proses login admin.
+    Menggunakan LoginView bawaan Django untuk keamanan.
+    """
+    form_class = LoginAdminForm
+    template_name = 'admin/auth/login.html'
+    # Halaman yang akan dituju setelah login berhasil
+    next_page = reverse_lazy('home') # Ganti 'home' dengan nama URL dashboard admin Anda
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Login Admin'
+        return context
+
+class LogoutAdminView(LogoutView):
+    """
+    View untuk menangani proses logout.
+    """
+    # Halaman yang akan dituju setelah logout berhasil
+    next_page = reverse_lazy('login_admin')

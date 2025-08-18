@@ -1,0 +1,136 @@
+{% extends "customer/customer_base.html" %}
+{% load static %}
+{% load humanize %}
+
+{% block title %}
+{{ title }}
+{% endblock title %}
+
+{% block content %}
+    <div class="tm-hero d-flex justify-content-center align-items-center" data-parallax="scroll" data-image-src="{% static 'product/customer/img/hero.jpg' %}">
+        <form class="d-flex tm-search-form" method="get" action="{% url 'customer:index' %}">
+            <input class="form-control tm-search-input" type="search" name="q" placeholder="Cari produk..." value="{{ search_query }}">
+            <button class="btn btn-outline-success tm-search-btn" type="submit">
+                <i class="fas fa-search"></i>
+            </button>
+        </form>
+    </div>
+
+    <div class="container-fluid tm-container-content tm-mt-60">
+        <div class="row mb-4">
+            <h2 class="col-12 tm-text-primary">{{ produk.nama }}</h2>
+        </div>
+        <div class="row tm-mb-90">            
+            <div class="col-xl-8 col-lg-7 col-md-6 col-sm-12">
+                {% with gambar_utama=produk.gambar_list.first %}
+                    {% if gambar_utama %}
+                        <img src="{{ gambar_utama.gambar.url }}" alt="{{ produk.nama }}" class="img-fluid">
+                    {% else %}
+                        <img src="{% static 'img/no-image.png' %}" alt="Gambar tidak tersedia" class="img-fluid">
+                    {% endif %}
+                {% endwith %}
+            </div>
+            <div class="col-xl-4 col-lg-5 col-md-6 col-sm-12">
+                <div class="tm-bg-gray tm-video-details">
+                    <h3 class="tm-text-gray-dark mb-3">{{ produk.nama }}</h3>
+                    <div class="mb-4">
+                        <span class="tm-text-gray-dark">Kategori: </span>
+                        <a href="#" class="tm-text-primary">{{ produk.kategori.nama }}</a>
+                    </div>
+                    <div class="mb-4">
+                        <h4 class="tm-text-gray-dark mb-3">Harga</h4>
+                        <h5> 
+                            {% if produk.harga_promo %}
+                                <span class="text-muted me-2"><del>Rp{{ produk.harga_normal|floatformat:0|intcomma }}</del></span>
+                                <b class="tm-text-primary">Rp{{ produk.harga_promo|floatformat:0|intcomma }}</b>
+                            {% else %}
+                                <b class="tm-text-primary">Rp{{ produk.harga_normal|floatformat:0|intcomma }}</b>
+                            {% endif %}
+                        </h5>
+                    </div>
+                    <div class="mb-4">
+                        <h4 class="tm-text-gray-dark mb-3">Keunggulan</h4>
+                        <p>{{ produk.value_selling|default:"-" }}</p>
+                    </div>
+                    <div class="mb-4">
+                        <h4 class="tm-text-gray-dark mb-3">Deskripsi</h4>
+                        <p>{{ produk.deskripsi|linebreaksbr|default:"Tidak ada deskripsi." }}</p>
+                    </div>
+                    <div class="mb-4">
+                        <h4 class="tm-text-gray-dark mb-3">Isi Buket</h4>
+                        <p>{{ produk.value_isi_buket|linebreaksbr|default:"-" }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row mb-4">
+            <h2 class="col-12 tm-text-primary">
+                Produk Terkait
+            </h2>
+        </div>
+        <div class="row mb-3 tm-gallery">
+            {% for related_prod in related_products %}
+            <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-5">
+                <figure class="effect-ming tm-video-item">
+                    {% with gambar_utama=related_prod.gambar_list.first %}
+                        {% if gambar_utama %}
+                            <img src="{{ gambar_utama.gambar.url }}" alt="{{ related_prod.nama }}" class="img-fluid">
+                        {% else %}
+                            <img src="{% static 'img/no-image.png' %}" alt="Gambar tidak tersedia" class="img-fluid">
+                        {% endif %}
+                    {% endwith %}
+                    <figcaption class="d-flex align-items-center justify-content-center">
+                        <h2>{{ related_prod.nama }}</h2>
+                        <a href="{% url 'customer:customer_product_detail' pk=related_prod.pk %}">Lihat Detail</a>
+                    </figcaption>                    
+                </figure>
+                <div class="d-flex justify-content-between tm-text-gray">
+                    <span class="tm-text-gray-light">{{ related_prod.kategori.nama }}</span>
+                    <span><b>Rp{{ related_prod.harga_aktif|floatformat:0|intcomma }}</b></span>
+                </div>
+            </div>
+            {% empty %}
+            <div class="col-12">
+                <p>Tidak ada produk terkait.</p>
+            </div>
+            {% endfor %} {# <-- Loop Produk Terkait berakhir di sini #}
+        </div> <!-- row -->
+
+        <!-- ================================== -->
+        <!-- PERBAIKAN: BLOK PRODUK POPULER DIPINDAHKAN KE SINI -->
+        <!-- ================================== -->
+        <div class="row mb-4">
+            <h2 class="col-12 tm-text-primary">
+                Produk Populer Lainnya
+            </h2>
+        </div>
+        <div class="row mb-3 tm-gallery">
+            {% for pop_prod in popular_products %}
+            <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-5">
+                <figure class="effect-ming tm-video-item">
+                    {% with gambar_utama=pop_prod.gambar_list.first %}
+                        {% if gambar_utama %}
+                            <img src="{{ gambar_utama.gambar.url }}" alt="{{ pop_prod.nama }}" class="img-fluid">
+                        {% else %}
+                            <img src="{% static 'img/no-image.png' %}" alt="Gambar tidak tersedia" class="img-fluid">
+                        {% endif %}
+                    {% endwith %}
+                    <figcaption class="d-flex align-items-center justify-content-center">
+                        <h2>{{ pop_prod.nama }}</h2>
+                        <a href="{% url 'customer:customer_product_detail' pk=pop_prod.pk %}">Lihat Detail</a>
+                    </figcaption>                    
+                </figure>
+                <div class="d-flex justify-content-between tm-text-gray">
+                    <span class="tm-text-gray-light">{{ pop_prod.kategori.nama }}</span>
+                    <span><b>Rp{{ pop_prod.harga_aktif|floatformat:0|intcomma }}</b></span>
+                </div>
+            </div>
+            {% empty %}
+            <div class="col-12">
+                <p>Tidak ada produk populer untuk ditampilkan.</p>
+            </div>
+            {% endfor %}
+        </div> <!-- row -->
+        
+    </div> <!-- container-fluid, tm-container-content -->
+{% endblock content %}

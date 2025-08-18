@@ -1,12 +1,13 @@
 from django import forms
 from django.forms import modelformset_factory
 from .models import Kategori,Produk,GambarProduk
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 
 
 class ProdukForm(forms.ModelForm):
     class Meta:
         model = Produk
-        exclude = ['slug'] # Slug di-generate otomatis, jadi kita kecualikan
+        exclude = ['slug','jumlah_dilihat'] # Slug di-generate otomatis, jadi kita kecualikan
         widgets = {
             'nama': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Nama Produk'}),
             'harga_normal': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Contoh: 150000'}),
@@ -33,3 +34,33 @@ GambarProdukFormSet = modelformset_factory(
     form=GambarProdukForm,
     extra=4  # jumlah form gambar yang muncul
 )
+
+
+
+# untuk regristasi dan login
+
+class RegistrasiAdminForm(UserCreationForm):
+    class Meta(UserCreationForm.Meta):
+        fields = UserCreationForm.Meta.fields + ('email',)
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        # Tambahkan perulangan ini untuk menerapkan class ke semua field
+        for field_name, field in self.fields.items():
+            field.widget.attrs['class'] = 'form-control'
+            field.widget.attrs['placeholder'] = f'Masukkan {field.label.lower()}'
+
+class LoginAdminForm(AuthenticationForm):
+    """
+    Form untuk login admin.
+    Mewarisi dari AuthenticationForm yang secara khusus dirancang untuk login.
+    """
+    # Kita bisa menambahkan atribut CSS di sini agar sesuai dengan template
+    username = forms.CharField(widget=forms.TextInput(attrs={
+        'class': 'form-control',
+        'placeholder': 'Username'
+    }))
+    password = forms.CharField(widget=forms.PasswordInput(attrs={
+        'class': 'form-control',
+        'placeholder': 'Password'
+    }))

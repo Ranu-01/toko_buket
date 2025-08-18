@@ -1,30 +1,33 @@
 {% load static %}
-
-
-    <nav class="navbar navbar-expand-lg">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="#">
-                <i class="fas fa-film mr-2"></i>
-                Catalog-Z
-            </a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <i class="fas fa-bars"></i>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav ml-auto mb-2 mb-lg-0">
-                <li class="nav-item">
-                    <a class="nav-link nav-link-1 active" aria-current="page" href="index.html">Photos</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link nav-link-2" href="videos.html">Videos</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link nav-link-3" href="about.html">About</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link nav-link-4" href="contact.html">Contact</a>
-                </li>
-            </ul>
-            </div>
+<nav class="navbar navbar-expand-lg">
+    <div class="container-fluid">
+        {# Link ini sekarang mengarah ke halaman utama aplikasi customer #}
+        <a class="navbar-brand" href="{% url 'customer:index' %}">
+            <i class="fas fa-film mr-2"></i>
+            Catalog-Z
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="fas fa-bars"></i>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav ml-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+                {# Link ini juga mengarah ke halaman utama #}
+                <a class="nav-link nav-link-1 {% if request.resolver_match.url_name == 'index' %}active{% endif %}" aria-current="page" href="{% url 'customer:index' %}">Produk</a>
+            </li>
+            <li class="nav-item">
+                {# Ganti '#' dengan URL yang benar jika Anda sudah membuat halaman 'videos' #}
+                <a class="nav-link nav-link-2 {% if request.resolver_match.url_name == 'kategori' %}active{% endif %}" href="{% url 'customer:kategori' %}">Kategori</a>
+            </li>
+            <li class="nav-item">
+                {# Ganti '#' dengan URL yang benar jika Anda sudah membuat halaman 'about' #}
+                <a class="nav-link nav-link-3" href="#">About Me</a>
+            </li>
+            <li class="nav-item">
+                {# Ganti '#' dengan URL yang benar jika Anda sudah membuat halaman 'contact' #}
+                <a class="nav-link nav-link-4" href="#">Contact</a>
+            </li>
+        </ul>
         </div>
-    </nav>
+    </div>
+</nav>

@@ -1,0 +1,109 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <title>{{ title|default:"Login Admin" }} | Skote</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Asumsi path static Anda, sesuaikan jika perlu -->
+    <link rel="shortcut icon" href="{% static "product/admin/images/favicon.ico" %}" />
+
+     <!-- Bootstrap Css -->
+     <link href="{% static "product/admin/css/bootstrap.min.css" %}" id="bootstrap-style" rel="stylesheet" type="text/css"  />
+     <!-- Icons Css -->
+     <link href="{% static "product/admin/css/icons.min.css" %}" rel="stylesheet" type="text/css" />
+     <!-- App Css-->
+     <link href="{% static "product/admin/css/app.min.css" %}" id="app-style" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+    <div class="account-pages my-5 pt-sm-5">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-8 col-lg-6 col-xl-5">
+                    <div class="card overflow-hidden">
+                        <div class="bg-primary bg-soft">
+                            <div class="row">
+                                <div class="col-7">
+                                    <div class="text-primary p-4">
+                                        <h5 class="text-primary">Selamat Datang Kembali !</h5>
+                                        <p>Login untuk melanjutkan.</p>
+                                    </div>
+                                </div>
+                                <div class="col-5 align-self-end">
+                                    <img src="{% static 'product/admin/images/profile-img.png' %}" alt="" class="img-fluid">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body pt-0"> 
+                            <div class="auth-logo">
+                                <a href="#" class="auth-logo-dark">
+                                    <div class="avatar-md profile-user-wid mb-4">
+                                        <span class="avatar-title rounded-circle bg-light">
+                                            <img src="{% static 'product/admin/images/logo.svg' %}" alt="" class="rounded-circle" height="34">
+                                        </span>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="p-2">
+                                <form class="form-horizontal" method="post">
+                                    {% csrf_token %}
+
+                                    {% if form.non_field_errors %}
+                                        <div class="alert alert-danger text-center">
+                                            {% for error in form.non_field_errors %}
+                                                {{ error }}
+                                            {% endfor %}
+                                        </div>
+                                    {% endif %}
+    
+                                    <div class="mb-3">
+                                        <label for="{{ form.username.id_for_label }}" class="form-label">Username</label>
+                                        {{ form.username }}
+                                    </div>
+            
+                                    <!-- ================================== -->
+                                    <!-- PERBAIKAN BAGIAN PASSWORD DI SINI -->
+                                    <!-- ================================== -->
+                                    <div class="mb-3">
+                                        <label class="form-label">Password</label>
+                                        <div class="input-group auth-pass-inputgroup">
+                                            {{ form.password }}
+                                            <button class="btn btn-light " type="button" id="password-addon"><i class="mdi mdi-eye-outline"></i></button>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="mt-3 d-grid">
+                                        <button class="btn btn-primary waves-effect waves-light" type="submit">Log In</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-5 text-center">
+                        <div>
+                            <p>Belum punya akun? <a href="{% url 'register_admin' %}" class="fw-medium text-primary"> Daftar sekarang </a> </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JAVASCRIPT -->
+    <script src="{% static "product/admin/libs/jquery/jquery.min.js" %} "></script>
+     <script src="{% static "product/admin/libs/bootstrap/js/bootstrap.bundle.min.js" %} "></script>
+     <script src="{% static "product/admin/libs/metismenu/metisMenu.min.js" %} "></script>
+     <script src="{% static "product/admin/libs/simplebar/simplebar.min.js" %} "></script>
+     <script src="{% static "product/admin/libs/node-waves/waves.min.js" %} "></script>
+
+     <!-- apexcharts -->
+     <script src="{% static "product/admin/libs/apexcharts/apexcharts.min.js" %} "></script>
+
+     <!-- Saas dashboard init -->
+     <script src="{% static "product/admin/js/pages/saas-dashboard.init.js" %}"></script>
+
+     <script src="{% static "product/admin/js/app.js" %}"></script>
+</body>
+</html>

@@ -16,6 +16,7 @@ class Produk(models.Model):
     value_isi_buket = models.TextField(help_text="Isi buket / item-item dalam produk", blank=True, null=True)
     kategori = models.ForeignKey(Kategori, on_delete=models.CASCADE, related_name='produks')
     slug = models.SlugField(unique=True, blank=True)
+    jumlah_dilihat = models.PositiveIntegerField(default=0)
 
     def __str__(self):
         return self.nama

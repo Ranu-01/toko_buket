@@ -4,7 +4,7 @@
                     <div class="d-flex">
                         <!-- LOGO -->
                         <div class="navbar-brand-box">
-                            <a href="index.html" class="logo logo-dark">
+                            <a href="{% url 'home' %}" class="logo logo-dark">
                                 <span class="logo-sm">
                                     <img src="static/product/admin/images/logo.svg" alt="" height="22">
                                 </span>
@@ -13,7 +13,7 @@
                                 </span>
                             </a>
 
-                            <a href="index.html" class="logo logo-light">
+                            <a href="{% url 'home' %}" class="logo logo-light">
                                 <span class="logo-sm">
                                     <img src="static/product/admin/images/logo-light.svg" alt="" height="22">
                                 </span>
@@ -52,13 +52,49 @@
                                 </form>
                             </div>
                         </div>
-
                         <div class="dropdown d-inline-block">
-                            <button type="button" class="btn header-item noti-icon right-bar-toggle waves-effect">
-                                <i class="bx bx-cog bx-spin"></i>
+                            <button type="button" class="btn header-item waves-effect" id="page-header-user-dropdown"
+                                data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                {# Mengganti ikon roda gigi dengan ikon pengguna yang lebih sesuai #}
+                                <i class="bx bx-user-circle font-size-24"></i>
                             </button>
-                        </div>
+                            <div class="dropdown-menu dropdown-menu-end">
+                                
+                                {# --- LOGIKA DINAMIS DIMULAI DI SINI --- #}
+                                {% if user.is_authenticated %}
 
+                                    {# JIKA PENGGUNA SUDAH LOGIN #}
+                                    <div class="dropdown-header">
+                                        <h6 class="text-primary">Selamat Datang, {{ user.username }}!</h6>
+                                    </div>
+                                    <div class="dropdown-divider"></div>
+                                    
+                                    <!-- PERBAIKAN: Mengubah link Logout menjadi form -->
+                                    <form action="{% url 'logout_admin' %}" method="post" class="d-inline">
+                                        {% csrf_token %}
+                                        <button type="submit" class="dropdown-item text-danger" style="border: none; background: none; width: 100%; text-align: left;">
+                                            <i class="bx bx-power-off font-size-16 align-middle me-1 text-danger"></i>
+                                            <span>Logout</span>
+                                        </button>
+                                    </form>
+
+                                {% else %}
+
+                                    {# JIKA PENGGUNA BELUM LOGIN (PENGUNJUNG) #}
+                                    <a class="dropdown-item" href="{% url 'login_admin' %}">
+                                        <i class="bx bx-log-in font-size-16 align-middle me-1"></i>
+                                        <span>Login</span>
+                                    </a>
+                                    <a class="dropdown-item" href="{% url 'register_admin' %}">
+                                        <i class="bx bx-user-plus font-size-16 align-middle me-1"></i>
+                                        <span>Register</span>
+                                    </a>
+
+                                {% endif %}
+                                {# --- LOGIKA DINAMIS BERAKHIR DI SINI --- #}
+
+                            </div>
+                        </div>
                     </div>
                 </div>
             </header>

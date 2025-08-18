@@ -1,0 +1,67 @@
+{% extends "customer/customer_base.html" %}
+{% load static %}
+{% load humanize %}
+
+{% block content %}
+    <div id="loader-wrapper">
+        <div id="loader"></div>
+
+        <div class="loader-section section-left"></div>
+        <div class="loader-section section-right"></div>
+
+    </div>
+    <div class="tm-hero d-flex justify-content-center align-items-center" data-parallax="scroll" data-image-src="{% static 'product/customer/img/hero.jpg' %}">
+        <form class="d-flex tm-search-form" method="get" action="{% url 'customer:index' %}">
+            <input class="form-control tm-search-input" type="search" name="q" placeholder="Cari produk..." value="{{ search_query }}">
+            <button class="btn btn-outline-success tm-search-btn" type="submit">
+                <i class="fas fa-search"></i>
+            </button>
+        </form>
+    </div>
+    
+    <div class="container-fluid tm-container-content tm-mt-60">
+        
+        <!-- ================================== -->
+        <!-- BAGIAN PRODUK PER KATEGORI -->
+        <!-- ================================== -->
+        {% for kategori in kategori_list %}
+            {% if kategori.produks %} 
+            <div class="row mb-4">
+                <h2 class="col-12 tm-text-primary">
+                    {{ kategori.nama }}
+                </h2>
+            </div>
+            <div class="row tm-mb-90 tm-gallery">
+                {% for produk in kategori.produks %}
+                <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-5">
+                    <figure class="effect-ming tm-video-item">
+                        {% with gambar_utama=produk.gambar_list.first %}
+                            {% if gambar_utama %}
+                                <img src="{{ gambar_utama.gambar.url }}" alt="{{ produk.nama }}" class="img-fluid">
+                            {% else %}
+                                <img src="{% static 'img/no-image.png' %}" alt="Gambar tidak tersedia" class="img-fluid">
+                            {% endif %}
+                        {% endwith %}
+                        <figcaption class="d-flex align-items-center justify-content-center">
+                            <h2>{{ produk.nama }}</h2>
+                            <a href="{% url 'detail_produk' pk=produk.pk %}">Lihat Detail</a>
+                        </figcaption>                    
+                    </figure>
+                    <div class="d-flex justify-content-between tm-text-gray">
+                        <span class="tm-text-gray-light">{{ produk.kategori.nama }}</span>
+                        <span>
+                            {% if produk.harga_promo %}
+                                <del class="text-muted me-1">Rp{{ produk.harga_normal|floatformat:0|intcomma }}</del>
+                                <b>Rp{{ produk.harga_promo|floatformat:0|intcomma }}</b>
+                            {% else %}
+                                <b>Rp{{ produk.harga_normal|floatformat:0|intcomma }}</b>
+                            {% endif %}
+                        </span>
+                    </div>
+                </div>
+                {% endfor %}
+            </div> <!-- row -->
+            {% endif %}
+        {% endfor %}
+    </div>
+{% endblock content %}
