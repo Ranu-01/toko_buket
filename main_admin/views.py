@@ -166,9 +166,7 @@ class ProdukDeleteView(LoginRequiredMixin,DeleteView):
      
 
 class DetailProdukView(LoginRequiredMixin,DetailView):
-    """
-    View ini sekarang sudah benar untuk menampilkan detail SATU produk.
-    """
+   
     model = Produk
     template_name = 'admin/detail_produk.html'
     # Nama variabel di template adalah 'produk' (tunggal)
@@ -236,9 +234,7 @@ class ProductUpdateView(LoginRequiredMixin,UpdateView):
 
 
 class RegistrasiView(CreateView):
-    """
-    View untuk menangani pembuatan admin baru.
-    """
+   
     form_class = RegistrasiAdminForm
     template_name = 'admin/auth/register.html'
     # Setelah registrasi berhasil, arahkan ke halaman login
@@ -250,10 +246,7 @@ class RegistrasiView(CreateView):
         return context
 
 class LoginAdminView(LoginView):
-    """
-    View untuk menangani proses login admin.
-    Menggunakan LoginView bawaan Django untuk keamanan.
-    """
+ 
     form_class = LoginAdminForm
     template_name = 'admin/auth/login.html'
     # Halaman yang akan dituju setelah login berhasil

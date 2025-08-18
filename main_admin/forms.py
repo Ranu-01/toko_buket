@@ -51,10 +51,7 @@ class RegistrasiAdminForm(UserCreationForm):
             field.widget.attrs['placeholder'] = f'Masukkan {field.label.lower()}'
 
 class LoginAdminForm(AuthenticationForm):
-    """
-    Form untuk login admin.
-    Mewarisi dari AuthenticationForm yang secara khusus dirancang untuk login.
-    """
+   
     # Kita bisa menambahkan atribut CSS di sini agar sesuai dengan template
     username = forms.CharField(widget=forms.TextInput(attrs={
         'class': 'form-control',

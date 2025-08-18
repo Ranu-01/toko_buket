@@ -12,18 +12,13 @@ class KategoriAdmin(admin.ModelAdmin):
     search_fields = ('nama',)
 
 class GambarProdukInline(admin.TabularInline):
-    """
-    Memungkinkan Anda untuk menambah/mengedit gambar produk
-    langsung dari halaman edit Produk.
-    """
+    
     model = GambarProduk
     extra = 1  # Jumlah form kosong untuk upload gambar baru
 
 @admin.register(Produk)
 class ProdukAdmin(admin.ModelAdmin):
-    """
-    Menyesuaikan tampilan model Produk di halaman admin.
-    """
+    
     # Menampilkan gambar produk secara inline di halaman edit produk
     inlines = [GambarProdukInline]
     

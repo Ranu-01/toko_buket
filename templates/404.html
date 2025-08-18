@@ -1,0 +1,62 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <title>404 Halaman Tidak Ditemukan | Admin</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Asumsi path static Anda, sesuaikan jika perlu -->
+    <link rel="shortcut icon" href="{% static "product/admin/images/favicon.ico" %}" />
+
+     <!-- Bootstrap Css -->
+     <link href="{% static "product/admin/css/bootstrap.min.css" %}" id="bootstrap-style" rel="stylesheet" type="text/css"  />
+     <!-- Icons Css -->
+     <link href="{% static "product/admin/css/icons.min.css" %}" rel="stylesheet" type="text/css" />
+     <!-- App Css-->
+     <link href="{% static "product/admin/css/app.min.css" %}" id="app-style" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+
+    <div class="account-pages my-5 pt-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="text-center mb-5">
+                        <h1 class="display-2 fw-medium">4<i class="bx bx-buoy bx-spin text-primary display-3"></i>4</h1>
+                        <h4 class="text-uppercase">Maaf, halaman tidak ditemukan</h4>
+                        <div class="mt-5 text-center">
+                            {# Link ini sekarang dinamis, mengarah ke URL 'home' admin Anda #}
+                            <a class="btn btn-primary waves-effect waves-light" href="{% url 'customer:index' %}">Kembali ke Dashboard</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-md-8 col-xl-6">
+                    <div>
+                        <img src="{% static 'product/admin/images/error-img.png' %}" alt="" class="img-fluid">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JAVASCRIPT -->
+    <script src="{% static "product/admin/libs/jquery/jquery.min.js" %} "></script>
+     <script src="{% static "product/admin/libs/bootstrap/js/bootstrap.bundle.min.js" %} "></script>
+     <script src="{% static "product/admin/libs/metismenu/metisMenu.min.js" %} "></script>
+     <script src="{% static "product/admin/libs/simplebar/simplebar.min.js" %} "></script>
+     <script src="{% static "product/admin/libs/node-waves/waves.min.js" %} "></script>
+
+     <!-- apexcharts -->
+     <script src="{% static "product/admin/libs/apexcharts/apexcharts.min.js" %} "></script>
+
+     <!-- Saas dashboard init -->
+     <script src="{% static "product/admin/js/pages/saas-dashboard.init.js" %}"></script>
+
+     <script src="{% static "product/admin/js/app.js" %}"></script>
+
+</body>
+</html>

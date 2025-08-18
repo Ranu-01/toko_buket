@@ -22,10 +22,6 @@ class IndexView(ListView):
         return queryset
 
     def get_context_data(self, **kwargs):
-        """
-        PERBAIKAN: Mengambil produk untuk setiap kategori secara manual
-        untuk menghindari error 'slice'.
-        """
         context = super().get_context_data(**kwargs)
         context['title'] = 'Beranda'
         context['search_query'] = self.request.GET.get('q', '')
@@ -65,10 +61,7 @@ class KategoriView(ListView):
         return queryset
 
     def get_context_data(self, **kwargs):
-        """
-        PERBAIKAN: Mengambil produk untuk setiap kategori secara manual
-        untuk menghindari error 'slice'.
-        """
+        
         context = super().get_context_data(**kwargs)
         context['title'] = 'Beranda'
         context['search_query'] = self.request.GET.get('q', '')
