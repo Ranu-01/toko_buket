@@ -3,8 +3,8 @@
     <div class="container-fluid">
         {# Link ini sekarang mengarah ke halaman utama aplikasi customer #}
         <a class="navbar-brand" href="{% url 'customer:index' %}">
-            <i class="fas fa-film mr-2"></i>
-            Catalog-Z
+            <i class="fas fa-shopping-basket mr-2"></i>
+            Takadoin.aja
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <i class="fas fa-bars"></i>
@@ -21,11 +21,11 @@
             </li>
             <li class="nav-item">
                 {# Ganti '#' dengan URL yang benar jika Anda sudah membuat halaman 'about' #}
-                <a class="nav-link nav-link-3" href="#">About Me</a>
+                <a class="nav-link nav-link-3 {% if request.resolver_match.url_name == 'about' %}active{% endif %} " href="{% url 'customer:about' %}">Tentang kami</a>
             </li>
             <li class="nav-item">
                 {# Ganti '#' dengan URL yang benar jika Anda sudah membuat halaman 'contact' #}
-                <a class="nav-link nav-link-4" href="#">Contact</a>
+                <a class="nav-link nav-link-4 {% if request.resolver_match.url_name == 'contact' %}active{% endif %} " href="{% url 'customer:contact' %}">Contact</a>
             </li>
         </ul>
         </div>

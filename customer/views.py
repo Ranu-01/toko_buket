@@ -1,8 +1,9 @@
 # File: customer/views.py
 
-from django.views.generic import ListView,DetailView
+from django.views.generic import ListView,DetailView,View
 from django.db.models import Q
 from main_admin.models import Produk, Kategori 
+from django.shortcuts import render
 
 class IndexView(ListView):
     model = Produk
@@ -116,3 +117,20 @@ class ProductDetailView(DetailView):
         context['popular_products'] = popular_products
         
         return context
+    
+
+class AboutView(View):
+    def get (self,request):
+        context ={
+            'title' : 'Tentang Kami'
+        }
+
+        return render(request,'customer/about_me.html',context)
+    
+
+class contactView(View):
+    def get (self,request):
+        context = {
+            'title' : 'Contact'
+        }
+        return render (request,'customer/contact.html',context)

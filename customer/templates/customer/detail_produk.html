@@ -32,6 +32,7 @@
             </div>
             <div class="col-xl-4 col-lg-5 col-md-6 col-sm-12">
                 <div class="tm-bg-gray tm-video-details">
+                    
                     <h3 class="tm-text-gray-dark mb-3">{{ produk.nama }}</h3>
                     <div class="mb-4">
                         <span class="tm-text-gray-dark">Kategori: </span>
@@ -60,6 +61,28 @@
                         <h4 class="tm-text-gray-dark mb-3">Isi Buket</h4>
                         <p>{{ produk.value_isi_buket|linebreaksbr|default:"-" }}</p>
                     </div>
+
+                    <!-- ================================== -->
+                    <!-- TOMBOL WHATSAPP DITAMBAHKAN DI SINI -->
+                    <!-- ================================== -->
+                     <div class="text-center mt-5">
+                        {# 1. Simpan URL relatif produk ke dalam variabel #}
+                        {% url 'customer:customer_product_detail' pk=produk.pk as product_url %}
+                        
+                        {# 2. Bangun URL lengkap (absolut) #}
+                        {% with full_product_url=request.scheme|add:"://"|add:request.get_host|add:product_url %}
+                        
+                        {# 3. Siapkan nomor WA dan pesan yang menyertakan link #}
+                        {% with phone_number="6285731290116" %} {# GANTI DENGAN NOMOR WA ANDA (diawali 62) #}
+                        {% with message="Halo, saya tertarik dengan produk: "|add:produk.nama|add:". Link produk: "|add:full_product_url %}
+                            <a href="https://wa.me/{{ phone_number }}?text={{ message|urlencode }}" class="btn btn-success tm-btn-big w-100" target="_blank" rel="noopener noreferrer">
+                                <i class="fab fa-whatsapp mr-2"></i> Pesan via WhatsApp
+                            </a>
+                        {% endwith %}
+                        {% endwith %}
+                        {% endwith %}
+                    </div>
+
                 </div>
             </div>
         </div>
@@ -69,6 +92,7 @@
             </h2>
         </div>
         <div class="row mb-3 tm-gallery">
+            <!-- Loop untuk Produk Terkait -->
             {% for related_prod in related_products %}
             <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-5">
                 <figure class="effect-ming tm-video-item">
@@ -93,11 +117,11 @@
             <div class="col-12">
                 <p>Tidak ada produk terkait.</p>
             </div>
-            {% endfor %} {# <-- Loop Produk Terkait berakhir di sini #}
+            {% endfor %}
         </div> <!-- row -->
 
         <!-- ================================== -->
-        <!-- PERBAIKAN: BLOK PRODUK POPULER DIPINDAHKAN KE SINI -->
+        <!-- BAGIAN PRODUK POPULER YANG HILANG -->
         <!-- ================================== -->
         <div class="row mb-4">
             <h2 class="col-12 tm-text-primary">
@@ -131,6 +155,6 @@
             </div>
             {% endfor %}
         </div> <!-- row -->
-        
+
     </div> <!-- container-fluid, tm-container-content -->
 {% endblock content %}

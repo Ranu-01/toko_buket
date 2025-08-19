@@ -1,0 +1,84 @@
+{% extends "customer/customer_base.html" %}
+{% load static %}
+{% load humanize %}
+
+{% block content %}
+<div id="loader-wrapper">
+     <div id="loader"></div>
+
+     <div class="loader-section section-left"></div>
+     <div class="loader-section section-right"></div>
+
+</div>
+<div class="tm-hero d-flex justify-content-center align-items-center" data-parallax="scroll" data-image-src="{% static 'product/customer/img/hero.jpg' %}"></div>
+
+    <div class="container-fluid tm-mt-60">
+        <div class="row tm-mb-50">
+            <div class="col-lg-4 col-12 mb-5">
+                <h2 class="tm-text-primary mb-5">Halaman Kontak</h2>
+                <!-- Beri ID pada form agar mudah dipilih oleh JavaScript -->
+                <form id="whatsapp-contact-form" class="tm-contact-form mx-auto">
+                    <div class="form-group">
+                        <input type="text" id="contact_name" name="name" class="form-control rounded-0" placeholder="Nama Anda" required />
+                    </div>
+                    <div class="form-group">
+                        <input type="email" id="contact_email" name="email" class="form-control rounded-0" placeholder="Email Anda" required />
+                    </div>
+                    <div class="form-group">
+                        <input type="tel" id="contact_number" name="number" class="form-control rounded-0" placeholder="Nomor Handphone" required />
+                    </div>
+                    <div class="form-group">
+                        <textarea rows="8" id="contact_message" name="message" class="form-control rounded-0" placeholder="Pesan Anda" required></textarea>
+                    </div>
+
+                    <div class="form-group tm-text-right">
+                        <button type="submit" class="btn btn-primary">Kirim via WhatsApp</button>
+                    </div>
+                </form>                
+            </div>
+            <div class="col-lg-4 col-12 mb-5">
+                <div class="tm-address-col">
+                    <h2 class="tm-text-primary mb-5">Alamat</h2>
+                    <p class="tm-mb-50">Toko buket Takadoin.aja berlokasi di Surabaya, mudah dijangkau karena dekat pusat kota. Anda bisa datang langsung untuk memilih desain buket, atau memesan secara online melalui WhatsApp. Kami juga menyediakan layanan pengantaran ke seluruh wilayah Surabaya dan sekitarnya.</p>
+                    <address class="tm-text-gray tm-mb-50">
+                        Jl. Raya Lontar Embong anyar, Gg No.08-A, RT.02,<br>
+                        Lontar, Kec. Sambikerep, Surabaya, Jawa Timur 60216
+                    </address>
+                    <p class="tm-mb-50">Jika ada yang ingin ditanyakan mengenai produk, lokasi, atau pengiriman, jangan ragu untuk menghubungi kami lewat kontak di bawah ini.</p>
+                    <ul class="tm-contacts">
+                        <li>
+                            <a href="#" class="tm-text-gray">
+                                <i class="fas fa-envelope"></i>
+                                Email: info@company.com
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://api.whatsapp.com/send/?phone=%2B6285850463006&text&type=phone_number&app_absent=0" class="tm-text-gray">
+                                <i class="fas fa-phone"></i>
+                                Tel: +62 858-5046-3006
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.instagram.com/takadoin.aja?igsh=MWpsb2ExMTR2aGR5Nw==" class="tm-text-gray">
+                                <i class="fab fa-instagram"></i>
+                                Takadoin.aja
+                            </a>
+                        </li>
+                    </ul>
+                </div>                
+            </div>
+            <div class="col-lg-4 col-12">
+                <h2 class="tm-text-primary mb-5">Peta</h2>
+                <!-- Map -->
+                <div class="mapouter mb-4">
+                    <div class="gmap-canvas">
+                        <iframe width="100%" height="520" id="gmap-canvas"
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3957.6195646215706!2d112.66057377385508!3d-7.284053371585935!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2dd7fda87470a183%3A0x530e56b08bc7d8bb!2sTakadoin.Aja!5e0!3m2!1sid!2sid!4v1755588762698!5m2!1sid!2sid" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>"
+                            frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe>
+                    </div>
+                </div>               
+            </div>
+        </div>
+    </div>
+    {% include "customer/snippets/footer.html" %}
+{% endblock content %}
