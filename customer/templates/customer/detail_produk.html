@@ -6,6 +6,7 @@
 {{ title }}
 {% endblock title %}
 
+
 {% block content %}
     <div class="tm-hero d-flex justify-content-center align-items-center" data-parallax="scroll" data-image-src="{% static 'product/customer/img/hero.jpg' %}">
         <form class="d-flex tm-search-form" method="get" action="{% url 'customer:index' %}">
@@ -21,14 +22,34 @@
             <h2 class="col-12 tm-text-primary">{{ produk.nama }}</h2>
         </div>
         <div class="row tm-mb-90">            
+            <!-- GALERI GAMBAR DINAMIS -->
             <div class="col-xl-8 col-lg-7 col-md-6 col-sm-12">
-                {% with gambar_utama=produk.gambar_list.first %}
-                    {% if gambar_utama %}
-                        <img src="{{ gambar_utama.gambar.url }}" alt="{{ produk.nama }}" class="img-fluid">
-                    {% else %}
-                        <img src="{% static 'img/no-image.png' %}" alt="Gambar tidak tersedia" class="img-fluid">
-                    {% endif %}
-                {% endwith %}
+                <div class="product-detai-imgs">
+                    <!-- Gambar Utama ditempatkan di atas -->
+                    <div class="tab-content mb-3" id="v-pills-tabContent">
+                        {% for gambar_objek in produk.gambar_list.all %}
+                        <div class="tab-pane fade {% if forloop.first %}show active{% endif %}" id="product-{{ forloop.counter }}" role="tabpanel">
+                            {# Div ini sekarang akan menggunakan style dari atas #}
+                            <div class="main-image-container">
+                                <img src="{{ gambar_objek.gambar.url }}" alt="{{ produk.nama }}">
+                            </div>
+                        </div>
+                        {% empty %}
+                            <div class="main-image-container">
+                                <img src="{% static 'img/no-image.png' %}" alt="Gambar tidak tersedia">
+                            </div>
+                        {% endfor %}
+                    </div>
+
+                    <!-- Galeri Thumbnail ditempatkan di bawah -->
+                    <div class="nav nav-pills justify-content-center" id="v-pills-tab" role="tablist" aria-orientation="horizontal">
+                        {% for gambar_objek in produk.gambar_list.all %}
+                        <a class="nav-link mb-2 p-0 mx-1 {% if forloop.first %}active{% endif %}" id="product-{{ forloop.counter }}-tab" data-bs-toggle="pill" href="#product-{{ forloop.counter }}" role="tab">
+                            <img src="{{ gambar_objek.gambar.url }}" alt="Thumbnail {{ forloop.counter }}" class="img-fluid rounded" style="width: 90px; height: 90px; object-fit: cover;">
+                        </a>
+                        {% endfor %}
+                    </div>
+                </div>
             </div>
             <div class="col-xl-4 col-lg-5 col-md-6 col-sm-12">
                 <div class="tm-bg-gray tm-video-details">
@@ -62,18 +83,11 @@
                         <p>{{ produk.value_isi_buket|linebreaksbr|default:"-" }}</p>
                     </div>
 
-                    <!-- ================================== -->
-                    <!-- TOMBOL WHATSAPP DITAMBAHKAN DI SINI -->
-                    <!-- ================================== -->
+                    <!-- Tombol WhatsApp -->
                      <div class="text-center mt-5">
-                        {# 1. Simpan URL relatif produk ke dalam variabel #}
                         {% url 'customer:customer_product_detail' pk=produk.pk as product_url %}
-                        
-                        {# 2. Bangun URL lengkap (absolut) #}
                         {% with full_product_url=request.scheme|add:"://"|add:request.get_host|add:product_url %}
-                        
-                        {# 3. Siapkan nomor WA dan pesan yang menyertakan link #}
-                        {% with phone_number="6285731290116" %} {# GANTI DENGAN NOMOR WA ANDA (diawali 62) #}
+                        {% with phone_number="6285731290116" %}
                         {% with message="Halo, saya tertarik dengan produk: "|add:produk.nama|add:". Link produk: "|add:full_product_url %}
                             <a href="https://wa.me/{{ phone_number }}?text={{ message|urlencode }}" class="btn btn-success tm-btn-big w-100" target="_blank" rel="noopener noreferrer">
                                 <i class="fab fa-whatsapp mr-2"></i> Pesan via WhatsApp
@@ -120,9 +134,7 @@
             {% endfor %}
         </div> <!-- row -->
 
-        <!-- ================================== -->
-        <!-- BAGIAN PRODUK POPULER YANG HILANG -->
-        <!-- ================================== -->
+        <!-- Produk Populer -->
         <div class="row mb-4">
             <h2 class="col-12 tm-text-primary">
                 Produk Populer Lainnya
@@ -158,3 +170,4 @@
 
     </div> <!-- container-fluid, tm-container-content -->
 {% endblock content %}
+

@@ -1,0 +1,39 @@
+/* Simpan file ini di: static/customer/css/detail-page.css */
+
+.main-image-container {
+    position: relative;
+    width: 100%;
+    /* Memaksa rasio aspek 16:9 (1080 / 1920 = 0.5625) */
+    padding-top: 56.25%; 
+    background-color: #f0f0f0;
+    border-radius: .25rem;
+    overflow: hidden;
+}
+.main-image-container img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Memastikan gambar mengisi area tanpa distorsi */
+}
+
+
+
+.tm-video-item {
+    position: relative;
+    overflow: hidden;
+    /* Memaksa rasio aspek 420x236 */
+    aspect-ratio: 420 / 236;
+    background-color: #f0f0f0; /* Warna latar jika gambar lambat dimuat */
+}
+
+.tm-video-item img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    /* Memastikan gambar mengisi area tanpa menjadi gepeng (crop to fit) */
+    object-fit: cover; 
+}

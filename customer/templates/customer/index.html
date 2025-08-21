@@ -2,6 +2,11 @@
 {% load static %}
 {% load humanize %}
 
+{% block styles %}
+{# Memuat file CSS kustom yang berisi gaya untuk halaman ini #}
+<link rel="stylesheet" href="{% static 'product/customer/css/detail-page.css' %}">
+{% endblock styles %}
+
 {% block content %}
     <div id="loader-wrapper">
         <div id="loader"></div>
@@ -20,7 +25,7 @@
     <div class="container-fluid tm-container-content tm-mt-60">
 
         <!-- ================================== -->
-        <!-- BAGIAN LAMA: SEMUA PRODUK TERBARU -->
+        <!-- SEMUA PRODUK TERBARU -->
         <!-- ================================== -->
         <div class="row mb-4">
             <h2 class="col-6 tm-text-primary">
@@ -40,7 +45,6 @@
                     {% endwith %}
                     <figcaption class="d-flex align-items-center justify-content-center">
                         <h2>{{ produk.nama }}</h2>
-                        {# PERBAIKAN LINK DI SINI #}
                         <a href="{% url 'customer:customer_product_detail' pk=produk.pk %}">Lihat Detail</a>
                     </figcaption>                    
                 </figure>
