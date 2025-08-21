@@ -1,4 +1,6 @@
 {% extends "admin/admin_base.html" %}
+{% load static %}
+{% load humanize %}
 
 {% block title %}
 {{ title }}
@@ -6,90 +8,78 @@
 
 {% block content %}
 <div class="main-content">
+    <div class="page-content">
+        <div class="container-fluid">
+            <!-- start page title -->
+            <div class="row">
+                <div class="col-12">
+                    <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+                        <h4 class="mb-sm-0 font-size-18">Tambah Produk</h4>
+                    </div>
+                </div>
+            </div>
+            <!-- end page title -->
 
-                <div class="page-content">
-                    <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <form method="post" enctype="multipart/form-data">
+                                {% csrf_token %}
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <div class="mb-3">
+                                            <label for="{{ form.nama.id_for_label }}">Nama Produk</label>
+                                            {{ form.nama }}
+                                            {% if form.nama.errors %}<div class="text-danger mt-1">{{ form.nama.errors|striptags }}</div>{% endif %}
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="{{ form.harga_normal.id_for_label }}">Harga Normal</label>
+                                            {{ form.harga_normal }}
+                                            {% if form.harga_normal.errors %}<div class="text-danger mt-1">{{ form.harga_normal.errors|striptags }}</div>{% endif %}
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="{{ form.harga_promo.id_for_label }}">Harga Promo</label>
+                                            {{ form.harga_promo }}
+                                            {% if form.harga_promo.errors %}<div class="text-danger mt-1">{{ form.harga_promo.errors|striptags }}</div>{% endif %}
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="{{ form.value_selling.id_for_label }}">Value Selling</label>
+                                            {{ form.value_selling }}
+                                            {% if form.value_selling.errors %}<div class="text-danger mt-1">{{ form.value_selling.errors|striptags }}</div>{% endif %}
+                                        </div>
+                                    </div>
 
-                        <!-- start page title -->
-                        <div class="row">
-                            <div class="col-12">
-                                <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                                    <h4 class="mb-sm-0 font-size-18">Tambah Product</h4>
-
-                                </div>
-                            </div>
-                        </div>
-                        <!-- end page title -->
-
-                        <div class="row">
-                            <div class="col-12">
-                                <div class="card">
-                                    <div class="card-body">
-                                        
-                                            <form method="post" enctype="multipart/form-data">
-                                                {% csrf_token %}
-                                                <div class="row">
-                                                    <div class="col-sm-6">
-                                                        <div class="mb-3">
-                                                            <label for="{{ form.nama.id_for_label }}">Nama Produk</label>
-                                                            {{ form.nama }}
-                                                            {% if form.nama.errors %}<div class="text-danger mt-1">{{ form.nama.errors|striptags }}</div>{% endif %}
-                                                        </div>
-                                                        <div class="mb-3">
-                                                            <label for="{{ form.harga_normal.id_for_label }}">Harga Normal</label>
-                                                            {{ form.harga_normal }}
-                                                            {% if form.harga_normal.errors %}<div class="text-danger mt-1">{{ form.harga_normal.errors|striptags }}</div>{% endif %}
-                                                        </div>
-                                                        <div class="mb-3">
-                                                            <label for="{{ form.harga_promo.id_for_label }}">Harga Promo</label>
-                                                            {{ form.harga_promo }}
-                                                            {% if form.harga_promo.errors %}<div class="text-danger mt-1">{{ form.harga_promo.errors|striptags }}</div>{% endif %}
-                                                        </div>
-                                                        <div class="mb-3">
-                                                            <label for="{{ form.value_selling.id_for_label }}">Value Selling</label>
-                                                            {{ form.value_selling }}
-                                                            {% if form.value_selling.errors %}<div class="text-danger mt-1">{{ form.value_selling.errors|striptags }}</div>{% endif %}
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="col-sm-6">
-                                                        <div class="mb-3">
-                                                            <label for="{{ form.kategori.id_for_label }}" class="control-label">Kategori</label>
-                                                            {{ form.kategori }}
-                                                            {% if form.kategori.errors %}<div class="text-danger mt-1">{{ form.kategori.errors|striptags }}</div>{% endif %}
-                                                        </div>
-                                                        <div class="mb-3">
-                                                            <label for="{{ form.deskripsi.id_for_label }}">Deskripsi Produk</label>
-                                                            {{ form.deskripsi }}
-                                                            {% if form.deskripsi.errors %}<div class="text-danger mt-1">{{ form.deskripsi.errors|striptags }}</div>{% endif %}
-                                                        </div>
-                                                        <div class="mb-3">
-                                                            <label for="{{ form.value_isi_buket.id_for_label }}">Value Isi Buket</label>
-                                                            {{ form.value_isi_buket }}
-                                                            {% if form.value_isi_buket.errors %}<div class="text-danger mt-1">{{ form.value_isi_buket.errors|striptags }}</div>{% endif %}
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                
-                                                <div class="d-flex flex-wrap gap-2 mt-3">
-                                                    {# Tombol submit ini akan mengarahkan ke halaman tambah gambar jika sukses #}
-                                                    <button type="submit" class="btn btn-primary waves-effect waves-light">Simpan dan Lanjut Tambah Gambar</button>
-                                                    <a href="{% url 'home' %}" class="btn btn-secondary waves-effect waves-light">Batal</a>
-                                                </div>
-                                            </form>
-        
+                                    <div class="col-sm-6">
+                                        <div class="mb-3">
+                                            <label for="{{ form.kategori.id_for_label }}" class="control-label">Kategori</label>
+                                            {{ form.kategori }}
+                                            {% if form.kategori.errors %}<div class="text-danger mt-1">{{ form.kategori.errors|striptags }}</div>{% endif %}
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="{{ form.deskripsi.id_for_label }}">Deskripsi Produk</label>
+                                            {{ form.deskripsi }}
+                                            {% if form.deskripsi.errors %}<div class="text-danger mt-1">{{ form.deskripsi.errors|striptags }}</div>{% endif %}
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="{{ form.value_isi_buket.id_for_label }}">Value Isi Buket</label>
+                                            {{ form.value_isi_buket }}
+                                            {% if form.value_isi_buket.errors %}<div class="text-danger mt-1">{{ form.value_isi_buket.errors|striptags }}</div>{% endif %}
+                                        </div>
                                     </div>
                                 </div>
-
                                 
-                                </div> <!-- end card-->
-                            </div>
+                                <div class="d-flex flex-wrap gap-2 mt-3">
+                                    <button type="submit" class="btn btn-primary waves-effect waves-light">Simpan dan Lanjut Tambah Gambar</button>
+                                    <a href="{% url 'home' %}" class="btn btn-secondary waves-effect waves-light">Batal</a>
+                                </div>
+                            </form>
                         </div>
-                        <!-- end row -->
-
-                    </div> <!-- container-fluid -->
+                    </div>
                 </div>
-                <!-- End Page-content -->
-
             </div>
+        </div>
+    </div>
+</div>
 {% endblock content %}
+

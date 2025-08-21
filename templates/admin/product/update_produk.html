@@ -73,7 +73,7 @@
                                 
                                 <div class="d-flex flex-wrap gap-2 mt-3">
                                     <button type="submit" class="btn btn-primary waves-effect waves-light">Simpan Perubahan</button>
-                                    <!-- Tombol Batal akan mengarahkan kembali ke halaman detail -->
+                                    <a href="{% url 'edit_product_images' pk=produk.pk %}" class="btn btn-info waves-effect waves-light">Edit Gambar</a>
                                     <a href="{% url 'detail_produk' pk=produk.pk %}" class="btn btn-secondary waves-effect waves-light">Batal</a>
                                 </div>
                             </form>

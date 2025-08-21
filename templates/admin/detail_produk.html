@@ -15,6 +15,12 @@ Detail: {{ produk.nama }}
                 <div class="col-12">
                     <div class="page-title-box d-sm-flex align-items-center justify-content-between">
                         <h4 class="mb-sm-0 font-size-18">Detail Produk: {{ produk.nama }}</h4>
+                        <div class="page-title-right">
+                            <a href="{% url 'home' %}" class="btn btn-secondary waves-effect waves-light">
+                                <i class="bx bx-arrow-back me-2"></i> Kembali ke Daftar Produk
+                            </a>
+                        </div>
+
                     </div>
                 </div>
             </div>
@@ -24,27 +30,27 @@ Detail: {{ produk.nama }}
                     <div class="card">
                         <div class="card-body">
                             <div class="row">
-                                <!-- KOLOM KIRI: GAMBAR PRODUK -->
+                                <!-- ================================== -->
+                                <!-- GALERI GAMBAR INTERAKTIF -->
+                                <!-- ================================== -->
                                 <div class="col-xl-6">
-                                    <!-- Gambar Utama -->
-                                    {% with gambar_utama=produk.gambar_list.first %}
-                                        <div class="mb-3">
-                                            {% if gambar_utama %}
-                                                <img src="{{ gambar_utama.gambar.url }}" alt="{{ produk.nama }}" class="img-fluid mx-auto d-block rounded">
-                                            {% else %}
-                                                <img src="{% static "product/admin/images/error-img.png" %}" alt="Gambar tidak tersedia" class="img-fluid rounded">
-                                            {% endif %}
-                                        </div>
-                                    {% endwith %}
-                                    
-                                    <!-- Galeri Thumbnail -->
-                                    <div class="d-flex flex-wrap gap-2">
+                                    <!-- Gambar Utama (Konten Tab) -->
+                                    <div class="tab-content mb-3" id="v-pills-tabContent">
                                         {% for gambar_objek in produk.gambar_list.all %}
-                                        <div class="product-color-item border rounded" style="width: 90px; height: 90px;">
-                                            <img src="{{ gambar_objek.gambar.url }}" alt="Thumbnail {{ forloop.counter }}" class="img-fluid mx-auto d-block h-100 w-100" style="object-fit: cover;">
+                                        <div class="tab-pane fade {% if forloop.first %}show active{% endif %}" id="admin-product-{{ forloop.counter }}" role="tabpanel">
+                                            <img src="{{ gambar_objek.gambar.url }}" alt="{{ produk.nama }}" class="img-fluid mx-auto d-block rounded">
                                         </div>
                                         {% empty %}
-                                            <p class="text-muted">Tidak ada galeri gambar.</p>
+                                            <img src="{% static 'product/admin/images/error-img.png' %}" alt="Gambar tidak tersedia" class="img-fluid rounded">
+                                        {% endfor %}
+                                    </div>
+                                    
+                                    <!-- Galeri Thumbnail (Navigasi) -->
+                                    <div class="nav nav-pills justify-content-center" id="v-pills-tab" role="tablist" aria-orientation="horizontal">
+                                        {% for gambar_objek in produk.gambar_list.all %}
+                                        <a class="nav-link mb-2 p-0 mx-1 {% if forloop.first %}active{% endif %}" id="admin-product-{{ forloop.counter }}-tab" data-bs-toggle="pill" href="#admin-product-{{ forloop.counter }}" role="tab">
+                                            <img src="{{ gambar_objek.gambar.url }}" alt="Thumbnail {{ forloop.counter }}" class="img-fluid rounded" style="width: 90px; height: 90px; object-fit: cover;">
+                                        </a>
                                         {% endfor %}
                                     </div>
                                 </div>

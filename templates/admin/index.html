@@ -1,121 +1,112 @@
 {% extends "admin/admin_base.html" %}
+{% load static %}
+{% load humanize %}
 
 {% block title %}
-{{ title }}
+{{ title|default:"Dashboard" }}
 {% endblock title %}
 
 {% block content %}
 <div class="main-content">
+    <div class="page-content">
+        <div class="container-fluid">
 
-                <div class="page-content">
-                    <div class="container-fluid">
-
-                        <!-- start page title -->
-                        <div class="row">
-                            <div class="col-12">
-                                <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                                    <h4 class="mb-sm-0 font-size-18">Dasboard</h4>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- end page title -->
-
-                            <div class="col-lg">
-                                    
-                                <div class="row mb-3">
-                                    <div class="col-xl-4 col-sm-6">
-                                        <div class="mt-2">
-                                            <h5>Product</h5>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-8 col-sm-6">
-                                        <form class="mt-4 mt-sm-0 float-sm-end d-sm-flex align-items-center">
-                                            <div class="search-box me-2">
-                                                <div class="position-relative">
-                                                    <input type="text" class="form-control border-0" placeholder="Search...">
-                                                    <i class="bx bx-search-alt search-icon"></i>
-                                                </div>
-                                            </div>
-                                            <ul class="nav nav-pills product-view-nav justify-content-end mt-3 mt-sm-0">
-                                                <li class="nav-item">
-                                                    <a class="nav-link active" href="#"><i class="bx bx-grid-alt"></i></a>
-                                                </li>
-                                                <li class="nav-item">
-                                                    <a class="nav-link" href="#"><i class="bx bx-list-ul"></i></a>
-                                                </li>
-                                            </ul>
-                                            
-                                            
-                                        </form>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    {% for produk in semua_produk %}
-
-                                    <div class="col-xl-4 col-sm-6">
-                                        <div class="card">
-                                            {% with gambar_utama=produk.gambar_list.first %}
-                                            <div class="card-body">
-                                                <div class="product-img position-relative">
-                                                    {% if gambar_utama %}
-                                                    <img src="{{ gambar_utama.gambar.url }}" alt="{{ produk.nama }} " class="img-fluid mx-auto d-block">
-                                                    {% else %}
-                                                    <img src="/static/img/no-image.png" alt="Gambar tidak tersedia" class="img-fluid rounded mb-3">
-                                                    {% endif %}
-                                                </div>
-                                                <div class="mt-4 text-center">
-                                                    <h5 class="mb-3 text-truncate"><a href="{% url 'detail_produk' pk=produk.id %}" class="text-dark">{{ produk.nama }} </a></h5>
-                                                    
-                                                    <h5 class="my-0"><span class="text-muted me-2"><del>{{ produk.harga_promo }}</del></span> <b>{{ produk.harga_normal }}</b></h5>
-                                                    
-                                                </div>
-                                            </div>
-                                            {% endwith %}
-                                        </div>
-                                    </div>
-                                    {% empty %}
-                                    {# Pesan ini akan muncul jika 'semua_produk' kosong #}
-                                    <div class="col-12">
-                                        <p class="text-center">Belum ada produk untuk ditampilkan.</p>
-                                    </div>
-                                        {% endfor %}
-                                    </div>
-                                <!-- end row -->
-
-                                <div class="row">
-                                    <div class="col-lg-12">
-                                        <ul class="pagination pagination-rounded justify-content-center mt-3 mb-4 pb-1">
-                                            <li class="page-item disabled">
-                                                <a href="javascript: void(0);" class="page-link"><i class="mdi mdi-chevron-left"></i></a>
-                                            </li>
-                                            <li class="page-item">
-                                                <a href="javascript: void(0);" class="page-link">1</a>
-                                            </li>
-                                            <li class="page-item active">
-                                                <a href="javascript: void(0);" class="page-link">2</a>
-                                            </li>
-                                            <li class="page-item">
-                                                <a href="javascript: void(0);" class="page-link">3</a>
-                                            </li>
-                                            <li class="page-item">
-                                                <a href="javascript: void(0);" class="page-link">4</a>
-                                            </li>
-                                            <li class="page-item">
-                                                <a href="javascript: void(0);" class="page-link">5</a>
-                                            </li>
-                                            <li class="page-item">
-                                                <a href="javascript: void(0);" class="page-link"><i class="mdi mdi-chevron-right"></i></a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- end row -->
-
-                    </div> <!-- container-fluid -->
+            <!-- start page title -->
+            <div class="row">
+                <div class="col-12">
+                    <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+                        <h4 class="mb-sm-0 font-size-18">Dashboard</h4>
+                    </div>
                 </div>
-                <!-- End Page-content -->
+            </div>
+            <!-- end page title -->
 
-                
+            <div class="col-lg">
+                <div class="row mb-3">
+                    <div class="col-xl-4 col-sm-6">
+                        <div class="mt-2">
+                            <h5>Daftar Produk</h5>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    {% for produk in semua_produk %}
+                    <div class="col-xl-4 col-sm-6">
+                        <div class="card">
+                            {% with gambar_utama=produk.gambar_list.first %}
+                            <div class="card-body">
+                                <div class="product-img position-relative" style="height: 220px;">
+                                    {% if gambar_utama %}
+                                    <img src="{{ gambar_utama.gambar.url }}" alt="{{ produk.nama }}" class="img-fluid mx-auto d-block" style="max-height: 100%; object-fit: contain;">
+                                    {% else %}
+                                    <img src="{% static 'img/no-image.png' %}" alt="Gambar tidak tersedia" class="img-fluid mx-auto d-block">
+                                    {% endif %}
+                                </div>
+                                <div class="mt-4 text-center">
+                                    <h5 class="mb-3 text-truncate"><a href="{% url 'detail_produk' pk=produk.id %}" class="text-dark">{{ produk.nama }}</a></h5>
+                                    
+                                    <!-- PERBAIKAN LOGIKA HARGA -->
+                                    <h5 class="my-0">
+                                        {% if produk.harga_promo %}
+                                            <span class="text-muted me-2"><del>Rp{{ produk.harga_normal|floatformat:0|intcomma }}</del></span>
+                                            <b>Rp{{ produk.harga_promo|floatformat:0|intcomma }}</b>
+                                        {% else %}
+                                            <b>Rp{{ produk.harga_normal|floatformat:0|intcomma }}</b>
+                                        {% endif %}
+                                    </h5>
+                                </div>
+                            </div>
+                            {% endwith %}
+                        </div>
+                    </div>
+                    {% empty %}
+                    <div class="col-12">
+                        <p class="text-center">Belum ada produk untuk ditampilkan.</p>
+                    </div>
+                    {% endfor %}
+                </div>
+                <!-- end row -->
+
+                <!-- ================================== -->
+                <!-- PERBAIKAN PAGINATION DINAMIS -->
+                <!-- ================================== -->
+                {% if is_paginated %}
+                <div class="row">
+                    <div class="col-lg-12">
+                        <ul class="pagination pagination-rounded justify-content-center mt-3 mb-4 pb-1">
+                            {% if page_obj.has_previous %}
+                            <li class="page-item">
+                                <a href="?page={{ page_obj.previous_page_number }}&q={{ search_query }}" class="page-link"><i class="mdi mdi-chevron-left"></i></a>
+                            </li>
+                            {% else %}
+                            <li class="page-item disabled">
+                                <a href="#" class="page-link"><i class="mdi mdi-chevron-left"></i></a>
+                            </li>
+                            {% endif %}
+                            
+                            {% for i in paginator.page_range %}
+                                {% if page_obj.number == i %}
+                                <li class="page-item active"><a href="#" class="page-link">{{ i }}</a></li>
+                                {% else %}
+                                <li class="page-item"><a href="?page={{ i }}&q={{ search_query }}" class="page-link">{{ i }}</a></li>
+                                {% endif %}
+                            {% endfor %}
+
+                            {% if page_obj.has_next %}
+                            <li class="page-item">
+                                <a href="?page={{ page_obj.next_page_number }}&q={{ search_query }}" class="page-link"><i class="mdi mdi-chevron-right"></i></a>
+                            </li>
+                            {% else %}
+                            <li class="page-item disabled">
+                                <a href="#" class="page-link"><i class="mdi mdi-chevron-right"></i></a>
+                            </li>
+                            {% endif %}
+                        </ul>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock content %}

@@ -9,10 +9,11 @@ from django.views.generic import (
      RedirectView,
      TemplateView
      )
+from django.http import HttpResponseRedirect
 from django.utils.text import slugify
 import uuid
 from django.contrib.auth.views import LoginView, LogoutView
-from django.forms import modelformset_factory
+from django.forms import modelformset_factory,inlineformset_factory
 from django.urls import reverse_lazy, reverse
 from .models import Kategori,GambarProduk,Produk
 from .forms import KategoriForm,GambarProdukForm,ProdukForm,GambarProdukFormSet,RegistrasiAdminForm, LoginAdminForm
@@ -138,6 +139,37 @@ class AddProductImagesView(LoginRequiredMixin,View):
             'formset': formset
         })
     
+
+def edit_product_images(request, pk):
+    """
+    View berbasis fungsi untuk mengelola (tambah/ubah/hapus) gambar
+    dari produk yang sudah ada.
+    """
+    produk = get_object_or_404(Produk, pk=pk)
+    # Gunakan inlineformset_factory, yang lebih cocok untuk mengedit objek terkait
+    ImageFormSet = inlineformset_factory(
+        Produk, 
+        GambarProduk, 
+        form=GambarProdukForm, 
+        extra=1, # Tampilkan 1 form kosong tambahan
+        can_delete=True # Izinkan penghapusan gambar
+    )
+
+    if request.method == 'POST':
+        formset = ImageFormSet(request.POST, request.FILES, instance=produk)
+        if formset.is_valid():
+            formset.save()
+            # Redirect kembali ke halaman detail setelah berhasil
+            return HttpResponseRedirect(reverse('detail_produk', kwargs={'pk': produk.pk}))
+    else:
+        formset = ImageFormSet(instance=produk)
+
+    return render(request, 'admin/product/update_gambar.html', {
+        'title': f'Edit Gambar untuk {produk.nama}',
+        'produk': produk,
+        'formset': formset
+    })
+
     
 
 class HomeAllProdukView(LoginRequiredMixin,ListView):

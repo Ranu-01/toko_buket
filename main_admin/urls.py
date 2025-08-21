@@ -18,9 +18,11 @@ urlpatterns = [
     path('list_produk',ProductListView.as_view(),name='list_produk'),
     path('create_produk/', ProductCreateView.as_view(), name='create_produk'),
     path('delete_produk/<int:pk>/', ProdukDeleteView.as_view(), name='delete_produk'),
-    path('produk/<int:pk>/tambah-gambar/', AddProductImagesView.as_view(), name='add_product_images'),
     path('produk/detail/<int:pk>/', DetailProdukView.as_view(), name='detail_produk'),
     path('produk/edit/<int:pk>/', ProductUpdateView.as_view(), name='edit_produk'),
+
+    path('produk/<int:pk>/tambah-gambar/', AddProductImagesView.as_view(), name='add_product_images'),
+    path('produk/edit-gambar/<int:pk>/', views.edit_product_images, name='edit_product_images'),
 
     path ('kategori/',KategoriListView.as_view(),name='kategori'),
     path ('kategori_create/',KategoriCreateview.as_view(),name='create_kategori'),
@@ -28,7 +30,7 @@ urlpatterns = [
     path ('kategori_delete/<int:pk>/',KategoriDeleteView.as_view(),name='delete_kategori'),
 
 
-    path ('customer/',include('customer.urls', namespace='customer')),
+    path ('customer/',include('customer.urls')),
 
 
     path('register/', RegistrasiView.as_view(), name='register_admin'),

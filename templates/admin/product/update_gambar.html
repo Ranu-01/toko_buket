@@ -1,0 +1,57 @@
+{% extends "admin/admin_base.html" %}
+
+{% block title %}{{ title }}{% endblock title %}
+
+{% block content %}
+<div class="main-content">
+    <div class="page-content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+                        <h4 class="mb-sm-0 font-size-18">{{ title }}</h4>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-body">
+                    <form method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        {{ formset.management_form }}
+
+                        <div class="row">
+                        {% for form in formset %}
+                            <div class="col-md-4 mb-4">
+                                <div class="card h-100">
+                                    <div class="card-body">
+                                        {% if form.instance.pk and form.instance.gambar %}
+                                            <img src="{{ form.instance.gambar.url }}" class="img-fluid rounded mb-2">
+                                        {% else %}
+                                            <p class="text-muted">Gambar baru</p>
+                                        {% endif %}
+                                        
+                                        {{ form.gambar }}
+
+                                        {% if form.can_delete %}
+                                            <div class="form-check mt-2">
+                                                {{ form.DELETE }}
+                                                <label class="form-check-label" for="{{ form.DELETE.id_for_label }}">Hapus Gambar Ini</label>
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                        </div>
+
+                        <hr>
+                        <button type="submit" class="btn btn-primary">Simpan Perubahan Gambar</button>
+                        <a href="{% url 'detail_produk' pk=produk.pk %}" class="btn btn-secondary">Batal</a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
