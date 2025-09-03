@@ -24,12 +24,12 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-body">
-                            <form method="post" enctype="multipart/form-data">
+                            <form method="post" enctype="multipart/form-data" id="product-form" novalidate>
                                 {% csrf_token %}
                                 <div class="row">
                                     <div class="col-sm-6">
                                         <div class="mb-3">
-                                            <label for="{{ form.nama.id_for_label }}">Nama Produk</label>
+                                            <label for="{{ form.nama.id_for_label }}" >Nama Produk</label>
                                             {{ form.nama }}
                                             {% if form.nama.errors %}<div class="text-danger mt-1">{{ form.nama.errors|striptags }}</div>{% endif %}
                                         </div>

@@ -12,8 +12,8 @@ class ProdukForm(forms.ModelForm):
             'nama': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Nama Produk'}),
             
             # PERBAIKAN: Tambahkan kelas 'price-format' sebagai penanda
-            'harga_normal': forms.TextInput(attrs={'class': 'form-control price-format', 'placeholder': 'Contoh: 150000'}),
-            'harga_promo': forms.TextInput(attrs={'class': 'form-control price-format', 'placeholder': 'Boleh kosong'}),
+            'harga_normal': forms.TextInput(attrs={'class': 'form-control price-format', 'placeholder': 'Contoh: 1500000','inputmode': 'numeric', 'pattern': '[0-9]*'}),
+            'harga_promo': forms.TextInput(attrs={'class': 'form-control price-format', 'placeholder': 'Boleh kosong','inputmode': 'numeric','pattern': '[0-9]*'}),
             
             'value_selling': forms.Textarea(attrs={'class': 'form-control', 'rows': 5, 'placeholder': 'Keunggulan/USP produk'}),
             'deskripsi': forms.Textarea(attrs={'class': 'form-control', 'rows': 5, 'placeholder': 'Deskripsi lengkap produk'}),

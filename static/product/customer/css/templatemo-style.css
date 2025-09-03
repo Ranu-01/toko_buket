@@ -198,7 +198,7 @@ a:hover { color:#009999; }
 .tm-mb-50 { margin-bottom: 50px; }
 .tm-mb-74 { margin-bottom: 74px; }
 .tm-mb-90 { margin-bottom: 90px; }
-.tm-text-primary { color: #009999; }
+.tm-text-primary { color: #464024; }
 .tm-text-secondary { color: #CC6699; }
 a.tm-text-primary:hover { color:#666666; }
 .tm-bg-gray { background-color: #EEEEEE; }
@@ -423,7 +423,7 @@ figure.effect-ming:hover img { opacity: 0.4; }
     margin-bottom: 5px;    
 }
 
-.tm-footer-links li a { color: #999999; }
+.tm-footer-links li a { color: #364024; }
 .tm-footer-links li a:hover { color: #009999; }
 
 .tm-social-links li {

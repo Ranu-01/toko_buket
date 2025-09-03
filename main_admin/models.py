@@ -10,8 +10,8 @@ class Kategori(models.Model):
 
 class Produk(models.Model):
     nama = models.CharField(max_length=255)
-    harga_normal = models.DecimalField(max_digits=10, decimal_places=2)
-    harga_promo = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
+    harga_normal = models.DecimalField(max_digits=15, decimal_places=0)
+    harga_promo = models.DecimalField(max_digits=15, decimal_places=0, blank=True, null=True)
     value_selling = models.CharField(max_length=255, help_text="Keunggulan/USP produk", blank=True, null=True)
     deskripsi = models.TextField(blank=True, null=True)
     value_isi_buket = models.TextField(help_text="Isi buket / item-item dalam produk", blank=True, null=True)
