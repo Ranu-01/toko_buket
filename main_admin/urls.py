@@ -12,6 +12,15 @@ from django.conf.urls.static import static
 from django.urls import path, include
 # Mengimpor file views.py dari direktori yang sama (main_admin) agar bisa memanggil semua view dari sana.
 from . import views 
+# --- IMPORTS BARU UNTUK API ---
+from rest_framework.routers import DefaultRouter
+from .api import KategoriViewSet, ProdukViewSet
+
+
+# --- DEFENISI ROUTER DRF ---
+router = DefaultRouter()
+router.register(r'kategori', KategoriViewSet, basename='api-kategori')
+router.register(r'produk', ProdukViewSet, basename='api-produk')
 
 # 'urlpatterns' adalah sebuah list yang Django cari untuk melakukan routing URL.
 urlpatterns = [
@@ -61,6 +70,11 @@ urlpatterns = [
     path('login/', views.LoginAdminView.as_view(), name='login_admin'),
     # URL untuk proses logout.
     path('logout/', views.LogoutAdminView.as_view(), name='logout_admin'),
+
+
+    # --- URL UNTUK API ---
+    # Tambahkan rute ini untuk meng-include semua URL yang dibuat oleh router DRF.
+    path('api/', include(router.urls)),
 ]
 
 # --- KONFIGURASI FILE MEDIA (HANYA UNTUK DEVELOPMENT) ---
